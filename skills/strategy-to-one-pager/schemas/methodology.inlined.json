@@ -1,0 +1,4769 @@
+{
+  "description": "Standard methodology for SOP templates",
+  "hierarchy": [
+    {
+      "description": "Level 0 template for initiative2area cascade",
+      "level": 0,
+      "limits": {
+        "criticalTeamsPerInitiative": 3
+      },
+      "onePagerSchema": {
+        "description": "Root level template for top-level company strategy",
+        "properties": {
+          "companyAmbition": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Company Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": true,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "enablers": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Enabler",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "narrative": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Narrative",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Enablers",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "metadata": {
+            "properties": {
+              "displayOrder": {
+                "default": [
+                  "purpose",
+                  "vision",
+                  "mission",
+                  "companyAmbition",
+                  "teamAmbition",
+                  "pillars",
+                  "enablers",
+                  "values",
+                  "narrative"
+                ],
+                "items": {
+                  "enum": [
+                    "narrative",
+                    "purpose",
+                    "vision",
+                    "mission",
+                    "companyAmbition",
+                    "teamAmbition",
+                    "pillars",
+                    "enablers",
+                    "values"
+                  ],
+                  "type": "string"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "schemaVersion": {
+                "default": "v1",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion"
+            ],
+            "type": "object"
+          },
+          "mission": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Mission",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": true,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "narrative": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Narrative",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "pillars": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "initiatives": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "content": {
+                          "items": {
+                            "properties": {
+                              "active": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "goal": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Goal (picture of success)",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "label": {
+                                "default": "Initiative",
+                                "type": "string"
+                              },
+                              "metadata": {
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "x-generate": "uuid"
+                                  }
+                                },
+                                "required": [
+                                  "id"
+                                ],
+                                "type": "object"
+                              },
+                              "name": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Name",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "narrative": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Narrative",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "semaphore": {
+                                "default": "none",
+                                "enum": [
+                                  "red",
+                                  "yellow",
+                                  "green",
+                                  "none"
+                                ],
+                                "type": "string"
+                              },
+                              "semaphoreEnabled": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "semaphoreNarrative": {
+                                "default": "",
+                                "type": "string"
+                              },
+                              "timing": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "endDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "startDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "metadata",
+                              "name"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 100,
+                          "maxItemsRecommended": 5,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "label": {
+                          "default": "Initiatives",
+                          "type": "string"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "content"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Pillar",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "displayOrder": {
+                          "default": [
+                            "name",
+                            "successDefinition1",
+                            "successDefinition2",
+                            "initiatives"
+                          ],
+                          "items": {
+                            "enum": [
+                              "name",
+                              "successDefinition1",
+                              "successDefinition2",
+                              "initiatives"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array",
+                          "uniqueItems": true
+                        },
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "name": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Name",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "successDefinition1": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 1",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "successDefinition2": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 2",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "name",
+                    "initiatives"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Pillars",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "purpose": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Purpose",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": true,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "teamAmbition": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Team Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "values": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Value"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 8,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Values",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "vision": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Vision",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": true,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "purpose",
+          "vision",
+          "mission",
+          "enablers",
+          "companyAmbition",
+          "pillars"
+        ],
+        "type": "object"
+      },
+      "propagationRules": {
+        "companyAmbition.textValue": "companyAmbition.textValue",
+        "enablers.content.*.content.textValue": "pillars.content.*.name.textValue",
+        "mission.textValue": "mission.textValue",
+        "pillars.content.*.initiatives.content.*.goal.textValue": "pillars.content.*.successDefinition1.textValue",
+        "pillars.content.*.initiatives.content.*.name.textValue": "pillars.content.*.name.textValue",
+        "purpose.textValue": "purpose.textValue",
+        "vision.textValue": "vision.textValue"
+      },
+      "templateID": "op-template-l0"
+    },
+    {
+      "description": "Level 1 template for initiative2area cascade",
+      "level": 1,
+      "limits": {
+        "criticalTeamsPerInitiative": 3
+      },
+      "onePagerSchema": {
+        "description": "Company-level strategic template with high-level objectives and ambitions",
+        "properties": {
+          "companyAmbition": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Company Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "enablers": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Enabler",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "narrative": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Narrative",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Enablers",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "metadata": {
+            "properties": {
+              "displayOrder": {
+                "default": [
+                  "purpose",
+                  "vision",
+                  "mission",
+                  "companyAmbition",
+                  "teamAmbition",
+                  "pillars",
+                  "enablers",
+                  "values",
+                  "narrative"
+                ],
+                "items": {
+                  "enum": [
+                    "narrative",
+                    "purpose",
+                    "vision",
+                    "mission",
+                    "companyAmbition",
+                    "teamAmbition",
+                    "pillars",
+                    "enablers",
+                    "values"
+                  ],
+                  "type": "string"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "schemaVersion": {
+                "default": "v1",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion"
+            ],
+            "type": "object"
+          },
+          "mission": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Mission",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "narrative": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Narrative",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "pillars": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "initiatives": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "content": {
+                          "items": {
+                            "properties": {
+                              "active": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "goal": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Goal (picture of success)",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "label": {
+                                "default": "Initiative",
+                                "type": "string"
+                              },
+                              "metadata": {
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "x-generate": "uuid"
+                                  }
+                                },
+                                "required": [
+                                  "id"
+                                ],
+                                "type": "object"
+                              },
+                              "name": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Name",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "narrative": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Narrative",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "semaphore": {
+                                "default": "none",
+                                "enum": [
+                                  "red",
+                                  "yellow",
+                                  "green",
+                                  "none"
+                                ],
+                                "type": "string"
+                              },
+                              "semaphoreEnabled": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "semaphoreNarrative": {
+                                "default": "",
+                                "type": "string"
+                              },
+                              "timing": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "endDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "startDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "metadata",
+                              "name"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 100,
+                          "maxItemsRecommended": 5,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "label": {
+                          "default": "Initiatives",
+                          "type": "string"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "content"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Pillar",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "displayOrder": {
+                          "default": [
+                            "name",
+                            "successDefinition1",
+                            "successDefinition2",
+                            "initiatives"
+                          ],
+                          "items": {
+                            "enum": [
+                              "name",
+                              "successDefinition1",
+                              "successDefinition2",
+                              "initiatives"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array",
+                          "uniqueItems": true
+                        },
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "name": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Name",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "successDefinition1": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 1",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "successDefinition2": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 2",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "name",
+                    "initiatives"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Pillars",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "purpose": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Purpose",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "teamAmbition": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Team Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": true,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "values": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Value"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 8,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Values",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "vision": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Vision",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "teamAmbition",
+          "pillars"
+        ],
+        "type": "object"
+      },
+      "propagationRules": {
+        "companyAmbition.textValue": "companyAmbition.textValue",
+        "enablers.content.*.content.textValue": "pillars.content.*.name.textValue",
+        "mission.textValue": "mission.textValue",
+        "pillars.content.*.initiatives.content.*.goal.textValue": "pillars.content.*.successDefinition1.textValue",
+        "pillars.content.*.initiatives.content.*.name.textValue": "pillars.content.*.name.textValue",
+        "purpose.textValue": "purpose.textValue",
+        "vision.textValue": "vision.textValue"
+      },
+      "templateID": "op-template-l1"
+    },
+    {
+      "description": "Level 2 template for initiative2area cascade",
+      "level": 2,
+      "limits": {
+        "criticalTeamsPerInitiative": 3
+      },
+      "onePagerSchema": {
+        "description": "Department or division-level template with tactical objectives",
+        "properties": {
+          "companyAmbition": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Company Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "enablers": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Enabler",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "narrative": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Narrative",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Enablers",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "metadata": {
+            "properties": {
+              "displayOrder": {
+                "default": [
+                  "purpose",
+                  "vision",
+                  "mission",
+                  "companyAmbition",
+                  "teamAmbition",
+                  "pillars",
+                  "enablers",
+                  "values",
+                  "narrative"
+                ],
+                "items": {
+                  "enum": [
+                    "narrative",
+                    "purpose",
+                    "vision",
+                    "mission",
+                    "companyAmbition",
+                    "teamAmbition",
+                    "pillars",
+                    "enablers",
+                    "values"
+                  ],
+                  "type": "string"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "schemaVersion": {
+                "default": "v1",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion"
+            ],
+            "type": "object"
+          },
+          "mission": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Mission",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "narrative": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Narrative",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "pillars": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "initiatives": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "content": {
+                          "items": {
+                            "properties": {
+                              "active": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "goal": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Goal (picture of success)",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "label": {
+                                "default": "Initiative",
+                                "type": "string"
+                              },
+                              "metadata": {
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "x-generate": "uuid"
+                                  }
+                                },
+                                "required": [
+                                  "id"
+                                ],
+                                "type": "object"
+                              },
+                              "name": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Name",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "narrative": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Narrative",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "semaphore": {
+                                "default": "none",
+                                "enum": [
+                                  "red",
+                                  "yellow",
+                                  "green",
+                                  "none"
+                                ],
+                                "type": "string"
+                              },
+                              "semaphoreEnabled": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "semaphoreNarrative": {
+                                "default": "",
+                                "type": "string"
+                              },
+                              "timing": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "endDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "startDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "metadata",
+                              "name"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 100,
+                          "maxItemsRecommended": 5,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "label": {
+                          "default": "Initiatives",
+                          "type": "string"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "content"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Pillar",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "displayOrder": {
+                          "default": [
+                            "name",
+                            "successDefinition1",
+                            "successDefinition2",
+                            "initiatives"
+                          ],
+                          "items": {
+                            "enum": [
+                              "name",
+                              "successDefinition1",
+                              "successDefinition2",
+                              "initiatives"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array",
+                          "uniqueItems": true
+                        },
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "name": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Name",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "successDefinition1": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 1",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "successDefinition2": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 2",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "name",
+                    "initiatives"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Pillars",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "purpose": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Purpose",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "teamAmbition": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Team Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": true,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "values": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Value"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 8,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Values",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "vision": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Vision",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "teamAmbition",
+          "pillars"
+        ],
+        "type": "object"
+      },
+      "propagationRules": {
+        "companyAmbition.textValue": "companyAmbition.textValue",
+        "enablers.content.*.content.textValue": "pillars.content.*.name.textValue",
+        "mission.textValue": "mission.textValue",
+        "pillars.content.*.initiatives.content.*.goal.textValue": "pillars.content.*.successDefinition1.textValue",
+        "pillars.content.*.initiatives.content.*.name.textValue": "pillars.content.*.name.textValue",
+        "purpose.textValue": "purpose.textValue",
+        "vision.textValue": "vision.textValue"
+      },
+      "templateID": "op-template-l2"
+    },
+    {
+      "description": "Level 3 template for initiative2area cascade",
+      "level": 3,
+      "limits": {
+        "criticalTeamsPerInitiative": 3
+      },
+      "onePagerSchema": {
+        "description": "Team or project-level template with operational details",
+        "properties": {
+          "companyAmbition": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Company Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "enablers": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Enabler",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "narrative": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Narrative",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Enablers",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "metadata": {
+            "properties": {
+              "displayOrder": {
+                "default": [
+                  "purpose",
+                  "vision",
+                  "mission",
+                  "companyAmbition",
+                  "teamAmbition",
+                  "pillars",
+                  "enablers",
+                  "values",
+                  "narrative"
+                ],
+                "items": {
+                  "enum": [
+                    "narrative",
+                    "purpose",
+                    "vision",
+                    "mission",
+                    "companyAmbition",
+                    "teamAmbition",
+                    "pillars",
+                    "enablers",
+                    "values"
+                  ],
+                  "type": "string"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "schemaVersion": {
+                "default": "v1",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion"
+            ],
+            "type": "object"
+          },
+          "mission": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Mission",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "narrative": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Narrative",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "pillars": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "active": {
+                      "default": true,
+                      "type": "boolean"
+                    },
+                    "initiatives": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "content": {
+                          "items": {
+                            "properties": {
+                              "active": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "goal": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Goal (picture of success)",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "label": {
+                                "default": "Initiative",
+                                "type": "string"
+                              },
+                              "metadata": {
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "x-generate": "uuid"
+                                  }
+                                },
+                                "required": [
+                                  "id"
+                                ],
+                                "type": "object"
+                              },
+                              "name": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Name",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "narrative": {
+                                "properties": {
+                                  "active": {
+                                    "default": true,
+                                    "type": "boolean"
+                                  },
+                                  "label": {
+                                    "default": "Narrative",
+                                    "type": "string"
+                                  },
+                                  "mandatory": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "readOnly": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphore": {
+                                    "default": "none",
+                                    "enum": [
+                                      "red",
+                                      "yellow",
+                                      "green",
+                                      "none"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "semaphoreEnabled": {
+                                    "default": false,
+                                    "type": "boolean"
+                                  },
+                                  "semaphoreNarrative": {
+                                    "default": "",
+                                    "type": "string"
+                                  },
+                                  "textValue": {
+                                    "default": null,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "textValue"
+                                ],
+                                "type": "object"
+                              },
+                              "semaphore": {
+                                "default": "none",
+                                "enum": [
+                                  "red",
+                                  "yellow",
+                                  "green",
+                                  "none"
+                                ],
+                                "type": "string"
+                              },
+                              "semaphoreEnabled": {
+                                "default": true,
+                                "type": "boolean"
+                              },
+                              "semaphoreNarrative": {
+                                "default": "",
+                                "type": "string"
+                              },
+                              "timing": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "endDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "startDate": {
+                                    "default": null,
+                                    "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "metadata",
+                              "name"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 100,
+                          "maxItemsRecommended": 5,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "label": {
+                          "default": "Initiatives",
+                          "type": "string"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "content"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Pillar",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "displayOrder": {
+                          "default": [
+                            "name",
+                            "successDefinition1",
+                            "successDefinition2",
+                            "initiatives"
+                          ],
+                          "items": {
+                            "enum": [
+                              "name",
+                              "successDefinition1",
+                              "successDefinition2",
+                              "initiatives"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array",
+                          "uniqueItems": true
+                        },
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "name": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Name",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "semaphore": {
+                      "default": "none",
+                      "enum": [
+                        "red",
+                        "yellow",
+                        "green",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "semaphoreEnabled": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "semaphoreNarrative": {
+                      "default": "",
+                      "type": "string"
+                    },
+                    "successDefinition1": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 1",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "successDefinition2": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Success 2",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "metadata",
+                    "name",
+                    "initiatives"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 5,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Pillars",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "purpose": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Purpose",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "teamAmbition": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Team Strategic Ambition",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          },
+          "values": {
+            "properties": {
+              "active": {
+                "default": false,
+                "type": "boolean"
+              },
+              "content": {
+                "items": {
+                  "properties": {
+                    "content": {
+                      "properties": {
+                        "active": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "label": {
+                          "default": "Text",
+                          "type": "string"
+                        },
+                        "mandatory": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "readOnly": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphore": {
+                          "default": "none",
+                          "enum": [
+                            "red",
+                            "yellow",
+                            "green",
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "semaphoreEnabled": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "semaphoreNarrative": {
+                          "default": "",
+                          "type": "string"
+                        },
+                        "textValue": {
+                          "default": null,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "textValue"
+                      ],
+                      "type": "object"
+                    },
+                    "label": {
+                      "default": "Value"
+                    },
+                    "metadata": {
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-generate": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "metadata",
+                    "content"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 100,
+                "maxItemsRecommended": 8,
+                "minItems": 0,
+                "type": "array"
+              },
+              "label": {
+                "default": "Values",
+                "type": "string"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "content"
+            ],
+            "type": "object"
+          },
+          "vision": {
+            "properties": {
+              "active": {
+                "default": true,
+                "type": "boolean"
+              },
+              "label": {
+                "default": "Vision",
+                "type": "string"
+              },
+              "mandatory": {
+                "default": false,
+                "type": "boolean"
+              },
+              "readOnly": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphore": {
+                "default": "none",
+                "enum": [
+                  "red",
+                  "yellow",
+                  "green",
+                  "none"
+                ],
+                "type": "string"
+              },
+              "semaphoreEnabled": {
+                "default": false,
+                "type": "boolean"
+              },
+              "semaphoreNarrative": {
+                "default": "",
+                "type": "string"
+              },
+              "textValue": {
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "textValue"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "pillars"
+        ],
+        "type": "object"
+      },
+      "propagationRules": {},
+      "templateID": "op-template-l3"
+    }
+  ],
+  "methodologyID": "methodology-v1"
+}

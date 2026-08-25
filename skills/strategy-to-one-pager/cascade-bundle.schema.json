@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Alaigned strategy cascade bundle",
+  "description": "Envelope for the strategy-to-one-pager skill output. Each onePagers[].content is additionally validated against schemas/methodology.inlined.json hierarchy[level].onePagerSchema.",
+  "type": "object",
+  "required": ["bundleVersion", "generator", "methodology", "company", "onePagers", "links"],
+  "additionalProperties": false,
+  "properties": {
+    "bundleVersion": { "const": "0.1" },
+    "generator": {
+      "type": "object",
+      "required": ["skill", "skillVersion", "generatedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "skill": { "type": "string", "minLength": 1 },
+        "skillVersion": { "type": "string", "minLength": 1 },
+        "generatedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+      }
+    },
+    "methodology": {
+      "type": "object",
+      "required": ["methodologyID", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "methodologyID": { "type": "string", "minLength": 1 },
+        "fingerprint": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "fingerprintGeneratedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+      }
+    },
+    "attribution": {
+      "type": "object",
+      "description": "Optional funnel attribution: one UUIDv4 per strategy run, written by the generating skill at first assembly. The artifact renderer inherits it into CTA links and the registration/import flows match it to a lead — an assist signal, never identity.",
+      "required": ["ref"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": { "type": "string", "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }
+      }
+    },
+    "company": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "sourceDocuments": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "onePagers": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["ref", "level", "title", "parentRef", "content"],
+        "additionalProperties": false,
+        "properties": {
+          "ref": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "level": { "type": "integer", "minimum": 0, "maximum": 3 },
+          "title": { "type": "string", "minLength": 1 },
+          "parentRef": { "type": ["string", "null"] },
+          "content": { "type": "object" }
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["parentRef", "childRef", "parentRule", "childRule", "parentPath", "childPath"],
+        "additionalProperties": false,
+        "properties": {
+          "parentRef": { "type": "string", "minLength": 1 },
+          "childRef": { "type": "string", "minLength": 1 },
+          "parentRule": { "type": "string", "minLength": 1 },
+          "childRule": { "type": "string", "minLength": 1 },
+          "parentPath": { "type": "string", "minLength": 1 },
+          "childPath": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
