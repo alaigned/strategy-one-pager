@@ -33,9 +33,6 @@ Checks, in order:
      Elixir harness
 
 Exit code 0 = valid; 1 = validation errors; 2 = usage/environment problem.
-
-The authoritative mirror of these checks lives in the monorepo eval harness
-(plg/evals). Keep the two in sync when the contract changes.
 """
 
 import argparse
@@ -59,7 +56,7 @@ UUID_RE = re.compile(
 # The `jsonschema` package is the preferred engine (exact draft-07 semantics)
 # and always wins when importable. The built-in checker is the stdlib fallback
 # for environments where pip cannot install anything (no-network chat
-# sandboxes, #532): the packaged schemas are fully inlined at package time
+# sandboxes): the packaged schemas are fully inlined at package time
 # ($ref/allOf resolved), so the draft-07 subset below covers every keyword
 # they use, and the full check set runs either way. The subset is guarded by
 # name and by form: a schema carrying any other keyword — or a supported
@@ -350,7 +347,7 @@ def level_limits(methodology, level):
         missing = sorted(key for key, value in limits.items() if value is None)
         sys.stderr.write(
             f"Methodology artifact is missing limits {missing} for level {level} — "
-            "regenerate it (mix alaigned.plg.export_methodology).\n"
+            "the packaged schemas/ directory is incomplete; download the skill again.\n"
         )
         sys.exit(2)
     return limits

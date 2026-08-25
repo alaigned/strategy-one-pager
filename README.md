@@ -18,7 +18,9 @@ it needs installed, worked examples and troubleshooting.
 
 ## This tree is generated
 
-It is composed and pushed by `plg/scripts/publish_github.sh` in Alaigned's main repository —
-editing files here has no effect beyond the next release, which overwrites them. Each release is a
-single commit tagged `v<version>`, matching the `version` in the skill's frontmatter; the commit
-message also records the fingerprint of the methodology schema that release validates against.
+It is built and published from Alaigned's development repository, so editing files here has no
+effect beyond the next release, which overwrites them. Each release is a single commit tagged
+`v<version>`, matching the `version` in the skill's frontmatter; the commit message also records
+the fingerprint of the methodology schema that release validates against.
+
+Issues and questions are welcome on this repository.

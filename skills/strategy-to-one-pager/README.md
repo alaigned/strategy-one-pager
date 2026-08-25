@@ -23,12 +23,12 @@ verifiable, and import-ready.
 
 ## Requirements
 
-- The `schemas/` directory must be present (produced by the packaging step; in the monorepo:
-  `mix alaigned.plg.export_methodology` or the `plg/scripts/package_skill_*.sh` packagers).
+- The `schemas/` directory must be present. It is generated when the skill is packaged and
+  ships inside the bundle — if it is missing, the copy you have is incomplete; download the
+  bundle again.
 - For the validator, either `uv` (the script declares its `jsonschema` dependency via PEP 723
   inline metadata, so `uv run scripts/validate_cascade.py …` self-provisions) or plain `python3`
-  with `jsonschema` importable. In the monorepo, `plg/.mise.toml` pins uv and
-  the packagers resolve it automatically via `mise x`.
+  with `jsonschema` importable.
 
 ## Versioning
 

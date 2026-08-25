@@ -192,6 +192,5 @@ automated sortation by end of 2027") assigned to team Operations. The bundle the
   paths through `p1`/`i1`/`cp1`) and (`...goal.textValue` → `...successDefinition1.textValue`,
   same entities).
 
-A complete valid bundle lives in the eval golden set:
-`plg/evals/golden/synthetic/meridian/expected/cascade.json` (monorepo only, not packaged with the
-public skill).
+A complete worked example is not packaged with the skill — build one by running the workflow
+end to end and validating the result with `scripts/validate_cascade.py`.

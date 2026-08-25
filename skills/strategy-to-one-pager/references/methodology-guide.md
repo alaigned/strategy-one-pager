@@ -1,7 +1,6 @@
 # Methodology Guide — Element Definitions and Quality Bar
 
-> Derived from **Alaigned Strategy Methodology 2026.1** (draft, owner: jenda; monorepo:
-> `plg/methodology/alaigned-methodology-2026.md`). This guide condenses what the skill needs for
+> Derived from **Alaigned Strategy Methodology 2026.1**. This guide condenses what the skill needs for
 > the Definition phase; the methodology also covers horizontal alignment, evaluation, adoption and
 > facilitation, which are out of scope for skill output. Where the shipped schema (v1) and the
 > methodology text diverge, the schema wins for output validity and the divergence is noted.

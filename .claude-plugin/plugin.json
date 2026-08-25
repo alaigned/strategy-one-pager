@@ -1,7 +1,7 @@
 {
   "name": "alaigned-strategy",
   "displayName": "Alaigned Strategy",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Turn existing strategy documents into a validated one-pager cascade: a company page plus one page per team, with machine-checkable alignment links.",
   "author": {
     "name": "Alaigned",
