@@ -1,8 +1,8 @@
 {
   "name": "alaigned-strategy",
   "displayName": "Alaigned Strategy",
-  "version": "0.12.2",
-  "description": "Turn existing strategy documents into a validated one-pager cascade: a company page plus one page per team, with machine-checkable alignment links.",
+  "version": "0.12.3",
+  "description": "Reads the decks, memos and plans you already have and writes a company one-pager plus a linked one-pager for every team — each one provably derived from the company's, and checked against the Alaigned methodology.",
   "author": {
     "name": "Alaigned",
     "url": "https://try.alaigned.com"
