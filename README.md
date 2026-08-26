@@ -1,10 +1,10 @@
 # strategy-to-one-pager
 
 A plugin bundling the **strategy-to-one-pager** Agent Skill. It converts a company's existing
-strategy documents — decks, memos, annual plans, OKR sheets — into a one-pager cascade: a
-company-level (L0) page plus one page per team (L1), where each team page carries explicit links
-back to the company page. The links are checked against a JSON schema rather than asserted, and
-the skill renders the result as HTML, PDF or Word.
+strategy documents — decks, memos, annual plans, OKR sheets — into a one-pager cascade: one page
+for the company and one for each team, where every team page carries explicit links back to the
+company page. The links are checked against a JSON schema rather than asserted, and the skill
+renders the result as HTML, PDF or Word.
 
 ## Layout
 

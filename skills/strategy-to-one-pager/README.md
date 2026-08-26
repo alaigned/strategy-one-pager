@@ -1,8 +1,8 @@
 # strategy-to-one-pager
 
 An [Agent Skill](https://code.claude.com/docs/en/skills) that converts a company's existing
-strategy documents into an **Alaigned-methodology one-pager cascade**: a company-level (L0)
-one-pager plus team-level (L1) one-pagers with explicit, machine-checkable alignment links.
+strategy documents into an **Alaigned-methodology one-pager cascade**: one one-pager for the
+company and one for each team, with explicit, machine-checkable alignment links between them.
 
 What makes it different from "strategy prompts": the output is a JSON bundle **validated against
 the same methodology schema the Alaigned product enforces** — structurally correct, alignment
