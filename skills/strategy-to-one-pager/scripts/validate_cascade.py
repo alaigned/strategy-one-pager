@@ -29,8 +29,7 @@ Checks, in order:
      dead-end initiatives reach none, and enablers cascade only to the
      children that adopt them (a content decision, not a rule)
   7. methodology ceilings as warnings — values read from the packaged
-     artifact's hierarchy[].limits, the single source shared with the
-     Elixir harness
+     artifact's hierarchy[].limits
 
 Exit code 0 = valid; 1 = validation errors; 2 = usage/environment problem.
 """
@@ -296,10 +295,9 @@ def schema_errors(schema, instance, engine):
 
 # Methodology rule values (element ceilings, critical-team cap) and the rule
 # classifications are NOT hardcoded here — they are read/derived from the
-# packaged methodology artifact, the single source shared with the Elixir
-# harness: the element ceilings from each collection's maxItemsRecommended
-# annotation, the critical-team cap from hierarchy[].limits, and the rule
-# classifications from propagationRules.
+# packaged methodology artifact: the element ceilings from each collection's
+# maxItemsRecommended annotation, the critical-team cap from
+# hierarchy[].limits, and the rule classifications from propagationRules.
 
 
 def level_entry(methodology, level):
@@ -347,7 +345,8 @@ def level_limits(methodology, level):
         missing = sorted(key for key, value in limits.items() if value is None)
         sys.stderr.write(
             f"Methodology artifact is missing limits {missing} for level {level} — "
-            "the packaged schemas/ directory is incomplete; download the skill again.\n"
+            "the schemas/ directory is out of date or incomplete. Regenerate it if "
+            "you maintain this skill, otherwise download the skill again.\n"
         )
         sys.exit(2)
     return limits

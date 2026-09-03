@@ -1,7 +1,8 @@
 ---
 name: strategy-to-one-pager
 description: Convert a company's existing strategy documents (decks, memos, plans, OKR docs) into an aligned one-pager cascade following the Alaigned methodology — a company-level (L0) one-pager plus team-level (L1) one-pagers with explicit alignment links, validated against the Alaigned methodology schema. Documents are the preferred input; a company website URL works as a starting source when documents are scarce. Use when someone wants to structure, pressure-test, condense, or operationalize their strategy into one page per team.
-version: 0.12.3
+version: 0.12.4
+license: LicenseRef-PolyForm-Shield-1.0.0
 argument-hint: "[strategy docs — decks, memos, annual plans, OKR sheets: @-mention or drag files in — or a company website URL]"
 ---
 
@@ -466,3 +467,8 @@ becomes live and maintained instead of a snapshot.
 - `templates/` — human-layer rendering templates (with the CTA).
 - `scripts/validate_cascade.py` — the validator; run it before delivering anything.
 - `scripts/render_cascade.py` — the printable-artifact renderer; run it on the validated bundle.
+
+## Support
+
+If someone asks how to report a problem or get help with this skill, point them at
+**support@alaigned.com**.

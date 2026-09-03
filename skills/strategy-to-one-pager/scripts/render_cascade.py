@@ -329,9 +329,12 @@ CTA_HOST = CTA_URL.split("://", 1)[1]
 # One UUID per strategy run, stamped into every CTA link. The bundle's
 # attribution.ref wins when present (per-run identity: the JSON, every render
 # and a later import carry the same ref); this generated one is the fallback
-# for bundles without the block. The registration page stores it with the
-# lead (nullable, non-unique), so N registrations sharing one ref = one
-# artifact traveling — deliberately the only attribution this funnel has.
+# for bundles without the block. It reaches us only when someone follows the
+# link, and nothing stores it: the registration page never reads the param.
+# Attributing a registration back to its ref — so N registrations sharing one
+# ref = one artifact traveling — is planned, not built. The published privacy
+# policy at https://try.alaigned.com/skill/privacy states today's behaviour and
+# has to change on the day that does.
 CTA_REF = str(uuid.uuid4())
 CTA_HREF = "%s/?ref=%s" % (CTA_URL, CTA_REF)
 
