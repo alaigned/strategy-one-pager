@@ -5,7 +5,7 @@
 <!-- Displayed text is clean: strip every [PROPOSED …] marker from the values below —
      proposed content surfaces in the open questions, not as per-item badges. -->
 
-## Core statements — propagated to every team
+## Company statements — cascaded to every team
 
 | Element | Statement |
 |---|---|

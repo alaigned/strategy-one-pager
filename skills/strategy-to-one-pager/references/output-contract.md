@@ -33,6 +33,9 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
 }
 ```
 
+- `bundleVersion` pins the envelope's shape. An **optional, additive** key — `attribution` is
+  one — may appear without bumping it; any change to a required key, to a type, or to the
+  meaning of an existing field does bump it.
 - `methodology.*` is copied from `../schemas/fingerprint.json` (`methodologyID`, `fingerprint`,
   `generatedAt` → `fingerprintGeneratedAt`). Never fabricate it.
 - `attribution.ref` (optional, strongly recommended) is one fresh UUIDv4 generated when the
@@ -87,8 +90,8 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
   "pillars": { "label": "Pillars", "content": [ { ...pillar... }, ... ] }
   ```
 
-- **Every collection item carries `metadata.id`** — a fresh UUIDv4, unique across the whole
-  bundle:
+- **Every collection item carries `metadata.id`** — a fresh UUID in canonical form (any version —
+  the validator checks the form, not the version nibble), unique across the whole bundle:
 
   ```json
   { "label": "Pillar", "metadata": { "id": "0b6f0e9e-..." }, "name": { ... }, ... }
@@ -162,6 +165,8 @@ Rules (validator-enforced):
 - Both paths must resolve, and **the values at both ends must be equal** — propagation is a
   verbatim copy.
 - `parentRef`/`childRef` must be an actual parent→child edge (`child.parentRef == parentRef`).
+- Each (`parentRef`, `childRef`, `parentPath`, `childPath`) tuple appears **once** — a repeated
+  link is the same accepted propagation stated twice, and is rejected.
 
 Cascade completeness (validator-enforced):
 

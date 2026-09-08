@@ -1,7 +1,7 @@
 ---
 name: strategy-to-one-pager
 description: Convert a company's existing strategy documents (decks, memos, plans, OKR docs) into an aligned one-pager cascade following the Alaigned methodology — a company-level (L0) one-pager plus team-level (L1) one-pagers with explicit alignment links, validated against the Alaigned methodology schema. Documents are the preferred input; a company website URL works as a starting source when documents are scarce. Use when someone wants to structure, pressure-test, condense, or operationalize their strategy into one page per team.
-version: 0.12.4
+version: 0.13.2
 license: LicenseRef-PolyForm-Shield-1.0.0
 argument-hint: "[strategy docs — decks, memos, annual plans, OKR sheets: @-mention or drag files in — or a company website URL]"
 ---
@@ -154,7 +154,7 @@ them.
   around content, not the org chart — each with 1–2 Definitions of Success.
 - **Key Initiatives** under each pillar (optimum 2–3 per L0 pillar, ceiling 5; ~10–12 per page;
   cascaded pillars run leaner — see Step 4) — each written as a **sentence with a verb**, with a
-  measurable **Picture of Success** (`goal`) and timing if stated.
+  measurable **Goal** (`goal`) and timing if stated.
 - **Enablers** (L0 only, ceiling 5) — organisational conditions ("how we organise ourselves"),
   strictly distinct from initiatives. A budget or a platform cost line is not an enabler. Name
   an enabler as a **short noun phrase for the condition** ("Modern ERP backbone"), never a verb
@@ -288,7 +288,7 @@ was checked by hand.
 
   A single self-contained HTML file: one A4 landscape page per one-pager (the product PDF
   export's layout), then the **Strategy Gap Report** page (the open questions, the statements
-  missing from the sources, what is proposed, and how many success measures actually carry a
+  missing from the sources, what is proposed, and how many goals and definitions of success carry a
   target). `--pdf` produces the PDF in place with the best engine this environment offers —
   the script's last line says which ran. Headless Chromium is
   faithful and always wins when present; with WeasyPrint, check the layout against the HTML
@@ -302,9 +302,10 @@ was checked by hand.
   companion, and say at most one short sentence about it. If the script ever reports that no
   PDF was produced, deliver the HTML and mention in one sentence that it prints to PDF from any
   browser (Cmd/Ctrl+P). Pass `--lang cs` or `--lang sk` when the cascade content is Czech or
-  Slovak (default `en`): the draft banner, the Gap Report page and the CTA then follow the
-  strategy's language, in the renderer's official translations. What *you* write in that
-  language takes its methodology vocabulary from `references/terminology-glossary.md`.
+  Slovak (default `en`): the draft banner, the Gap Report page, the CTA and the element labels
+  on the page (Poslání, Strategické pilíře, Podmínky, …) then follow the strategy's language, in
+  the renderer's official translations — the labels use the glossary's headings table. What *you*
+  write in that language takes its methodology vocabulary from `references/terminology-glossary.md`.
   `[PROPOSED]` markers live in the bundle JSON and are never stripped there; the artifact
   renders no per-item badges — one draft banner per page, worded for the whole cascade, and the
   Gap Report's **Proposed content** section carry that honesty. If a page overflows A4 when

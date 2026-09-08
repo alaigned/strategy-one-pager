@@ -32,9 +32,9 @@ single test removes most of what does not belong.
 | Strategic Pillars | `pillars` | all levels | Authored pillars: **short noun phrase, 2–4 words** ("Grid", "Core assortment everywhere") — never a sentence with a verb. Optimum 3–4, ceiling 5. Cascaded pillars carry the parent initiative's sentence verbatim — that's correct, they are continuations |
 | Definition of Success (DEOS) | `successDefinition1`, `successDefinition2` | 1–2 per pillar | How you know the pillar is won — high-level, as measurable as possible. Enterprise default pairing: medium-term ambition (`successDefinition1`) + this-year goal (`successDefinition2`) |
 | Key Initiatives | `initiatives` per pillar | all levels | The activities that deliver the pillar. Belongs to exactly one pillar. Optimum 2–3 per L0 pillar (1–3 under a cascaded pillar), ceiling 5; ~10–12 initiatives per page total |
-| Picture of Success (PICOS) | initiative `goal` | 1 per initiative | The specific, measurable result of the initiative — the engine of the cascade (becomes the child pillar's DEOS) |
+| Goal | initiative `goal` | 1 per initiative | The specific, measurable result of the initiative — the engine of the cascade (becomes the child pillar's DEOS). The methodology's earlier name *Picture of Success* (PICOS) is retired |
 | Enablers | `enablers` | L0 only | Foundations performance rests on — "how we organise ourselves", not "what we want to achieve". Optimum 3–4, ceiling 5. Name = **short noun phrase for the condition** ("Modern ERP backbone"), never a verb exhortation — the name cascades verbatim into child pillar names |
-| Values / Culture | `values` | optional, L0 | Attitudes and behaviours, **first person**, short ("We are in it together"). Ceiling 8. Never invent them |
+| Culture / Values / Behaviours | `values` | optional, L0 | Attitudes and behaviours, **first person**, short ("We are in it together"). Ceiling 8. Never invent them |
 | DNA (decision cross-roads) | — *(no schema field in v1)* | optional | A few defining either/or choices. Rarely used. If the sources contain genuine DNA, put it in the L0 `narrative` element and add an open question |
 | Critical Teams | — *(expressed via cascade `links`)* | optional | Which teams deliver an initiative — this drives the cascade (below) |
 
@@ -47,7 +47,7 @@ single test removes most of what does not belong.
 2. **An initiative must stand on its own for a distant reader.** An accountant should understand
    a trading initiative. Spell out domain acronyms on first use. If a colleague from the
    furthest-away function would have to ask, rewrite.
-3. **A goal (PICOS) measures output, not input, and carries a number.** Not "improve visibility"
+3. **A goal measures output, not input, and carries a number.** Not "improve visibility"
    but "+20% organic traffic". Reserve input goals ("the system is live") for cases where nothing
    else is honestly possible (regulatory milestone, governance approval). The test: could you
    say mid-year "we are green, yellow or red" against it? If not, it's written wrong.
@@ -89,7 +89,7 @@ The mechanism is precise:
 
 - A Key Initiative names its **Critical Teams** (max 3, direct reports of the one-pager's owner
   only). For each critical team, the initiative becomes a **Strategic Pillar on that team's
-  one-pager**, carrying its Picture of Success as the new pillar's Definition of Success. The
+  one-pager**, carrying its Goal as the new pillar's Definition of Success. The
   receiving team then writes its own Key Initiatives under that pillar.
 - **The dead-end rule:** if the owning team itself does the work, the initiative does not cascade
   — it terminates at that level. Not every initiative produces a child pillar.

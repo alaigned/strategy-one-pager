@@ -21,8 +21,9 @@ Checks, in order:
      hierarchy[level].onePagerSchema
   4. structural rules: single L0, resolvable parent refs, level = parent+1,
      unique refs, unique + well-formed entity UUIDs
-  5. links: rule pair belongs to the parent level's propagationRules, paths
-     match rules, paths resolve, values are verbatim-equal
+  5. links: each (parentRef, childRef, parentPath, childPath) appears once,
+     rule pair belongs to the parent level's propagationRules, paths match
+     rules, paths resolve, values are verbatim-equal
   6. cascade completeness: a core-field link per core field the parent fills,
      every child pillar derives from a parent initiative or enabler, and a
      cascading initiative reaches at most 3 children (its critical teams);
@@ -584,6 +585,24 @@ def check_structure(bundle, findings):
 
 def check_links(bundle, methodology, by_ref, findings):
     links = bundle.get("links", [])
+
+    # (parentRef, childRef, parentPath, childPath) identifies one propagation
+    # row; a repeat would ask the product to insert the same accepted link
+    # twice. Checked before the per-link rules — both copies are individually
+    # well-formed, so nothing else would notice.
+    seen = {}
+    for i, link in enumerate(links):
+        key = (
+            link.get("parentRef"),
+            link.get("childRef"),
+            link.get("parentPath"),
+            link.get("childPath"),
+        )
+        if key in seen:
+            findings.error("links", f"links[{i}]: duplicate of links[{seen[key]}]")
+        else:
+            seen[key] = i
+
     for i, link in enumerate(links):
         label = f"links[{i}]"
         parent = by_ref.get(link.get("parentRef"))

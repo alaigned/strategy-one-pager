@@ -1,7 +1,7 @@
 # CZ/SK Terminology Glossary — Alaigned methodology vocabulary
 
-> **Working vocabulary.** These terms are being refined with native speakers; where a client's
-> own materials use a different word, follow the client and stay consistent.
+> **Working vocabulary**, reviewed with the methodology owners (2026-09). Where a client's own
+> materials use a different word, follow the client and stay consistent.
 
 Czech and Slovak deliverables name the methodology's own concepts with the terms below. The
 English column is the concept as this skill's other references name it; the CS and SK columns are
@@ -22,8 +22,16 @@ what you write when the cascade is Czech or Slovak.
   is not the term.
 - **Decline borrowed terms per the target grammar** — *v one-pageru*, *z one-pagerov* — never
   parked in the English nominative mid-sentence.
+- **The methodology cascades; the product propagates.** *Cascade* / *kaskáda* names the
+  phenomenon — priorities handed from one level to the next. *Propagation* / *propagace* is the
+  product's name for the approval step that sends a cascade down, and in Czech and Slovak the
+  noun reads as advertising. The skill has no such step, so its deliverables say *kaskádovat* /
+  *kaskádovať*; the only propag- stem in the output is the CTA footer, which describes the
+  product and is fixed text.
 - **Bundle `label` fields currently ship with the schema's English defaults.** Localizing them is
-  a pending product decision — do not translate them ad hoc.
+  a pending product decision — do not translate them ad hoc. The renderer prints them in the
+  language's terms from the headings table below, so the page reads Czech or Slovak while the
+  JSON stays English.
 - **`[PROPOSED]` is never translated** — the marker is read by the validator and the renderer.
 
 ## Register
@@ -34,26 +42,29 @@ what you write when the cascade is Czech or Slovak.
 - **CS/SK headings are sentence case**, capital on the first word (and on proper nouns) only —
   *Strategické pilíře*, *Otevřené otázky*. English Title Case transplanted into Czech or Slovak
   looks like a machine translation, whatever the English source did.
-- **Numbers follow the target language.** Percentages take a space before the sign — *25 %*, not
-  *25%* — and decimals take a comma: *99,2 %*. Ranges use an en dash without spaces (*2026–2028*).
+- **Numbers follow the target language.** A percentage used as a noun takes a space before the
+  sign — *rozdíl o 25 %*; used as an adjective it takes none — *25% rozdíl*. Decimals take a
+  comma: *99,2 %*. Ranges use an en dash without spaces (*2026–2028*).
 
 ## One-pager elements
 
 | EN term | CS | SK | Usage note |
 |---|---|---|---|
 | one-pager | one-pager | one-pager | Anglicism, kept. Declines as a hard masculine inanimate: CS *one-pageru / one-pagery / one-pagerů*, SK *one-pageru / one-pagery / one-pagerov*. |
-| purpose | smysl | zmysel | The "why" beyond profit. |
+| purpose | poslání | poslanie | The "why" beyond profit. *Poslání* belongs to Purpose only — never reuse it for Mission. |
 | vision | vize | vízia | |
-| mission | mise | misia | *poslání* / *poslanie* is fine when the client's own documents use it — then use it throughout. |
+| mission | mise | misia | |
 | company strategic ambition | strategická ambice firmy | strategická ambícia firmy | Short heading form: *Ambice firmy* / *Ambícia firmy*. |
 | team strategic ambition | strategická ambice týmu | strategická ambícia tímu | CS *tým*, SK *tím* — one letter apart; easy to leave the Czech form on a Slovak page. |
 | strategic pillar | strategický pilíř | strategický pilier | Pl. CS *pilíře / pilířů*, SK *piliere / pilierov*. |
-| key initiative | klíčová iniciativa | kľúčová iniciatíva | Gen. pl. CS *iniciativ*, SK *iniciatív*. |
-| enabler | předpoklad | predpoklad | **Weakest row — flag it in review.** *enabler* as an anglicism is common in CZ/SK consulting and acceptable when the client's materials use it. Keep the name a noun phrase: it cascades verbatim into a child pillar name. |
-| value(s) | hodnota / hodnoty | hodnota / hodnoty | First person, as the methodology requires: *Jsme v tom spolu* / *Sme v tom spolu*. |
-| definition of success (DEOS) | definice úspěchu | definícia úspechu | |
-| picture of success (PICOS) | obraz úspěchu | obraz úspechu | The initiative's measurable result. |
-| success measure | měřítko úspěchu | meradlo úspechu | Matches the Gap Report chrome (CS gen. pl. *měřítek úspěchu*, SK *meradiel úspechu*). |
+| key area of initiatives (L0) | klíčová oblast iniciativ | kľúčová oblasť iniciatív | The methodology's name for the initiative rows on the **company** one-pager — L0 initiatives are broad areas, not single activities. |
+| key initiative (L1 and below) | klíčová iniciativa | kľúčová iniciatíva | Gen. pl. CS *iniciativ*, SK *iniciatív*. |
+| enabler | podmínka | podmienka | The methodology's word — a condition performance rests on. *Předpoklad* / *predpoklad* was an earlier draft: do not use it. *Enabler* as an anglicism is common in CZ/SK consulting and acceptable when the client's materials use it. Keep the name a noun phrase: it cascades verbatim into a child pillar name. |
+| culture / values / behaviours | kultura / hodnoty / chování | kultúra / hodnoty / správanie | The bundle field is `values`; the page heading is *Hodnoty*. First person, as the methodology requires: *Jsme v tom spolu* / *Sme v tom spolu*. |
+| definition of success (DEOS) | definice úspěchu | definícia úspechu | The pillar's answer to "what does success look like here". |
+| goal (of an initiative) | cíl | cieľ | The initiative's measurable result; becomes the child pillar's definition of success. *Picture of Success* (PICOS) is retired vocabulary — the bundle field is still `goal`. |
+| success measure | měřítko úspěchu | meradlo úspechu | **Chrome only** — the Gap Report's target-value ratio (CS gen. pl. *měřítek úspěchu*, SK *meradiel úspechu*). Never in prose: say *cíl* or *definice úspěchu*. |
+| narrative | narativ | naratív | The free-text element under the core statements; the anglicism is the CZ/SK business term. *Příběh* / *príbeh* reads as storytelling — do not use it. |
 | statement (core statement) | výrok | výrok | Gen. pl. CS *výroků*, SK *výrokov*. |
 | open question | otevřená otázka | otvorená otázka | |
 | timing | termín | termín | One-pager table column; *časový rámec* when the cell holds a range. |
@@ -63,18 +74,18 @@ what you write when the cascade is Czech or Slovak.
 | EN term | CS | SK | Usage note |
 |---|---|---|---|
 | cascade (noun) | kaskáda | kaskáda | The product's word; keep it. |
-| to cascade | kaskádovat | kaskádovať | Origin lines read *Kaskáduje z: X* in both languages, matching the rendered page's kicker. Slovak reviewers may prefer *nadväzuje na* in running prose; the chrome string stays as it is. |
+| to cascade | kaskádovat | kaskádovať | Reflexive or not by agent: *iniciativy se kaskádují* (the initiative is handed down), *kaskádujeme iniciativy* (we hand it down). Origin lines read *Kaskáduje z: X* in both languages, matching the rendered page's kicker. Slovak reviewers may prefer *nadväzuje na* in running prose; the chrome string stays as it is. |
 | alignment | sladění | zosúladenie | |
-| to propagate | propagovat se | propagovať sa | *změny se propagují mezi úrovněmi* / *zmeny sa propagujú medzi úrovňami*. **Never the noun** *propagace* / *propagácia* — in both languages it reads as advertising. Rephrase with the verb, or *šíření změn* / *šírenie zmien*. In **headings**, prefer *přenášet* / *prenášať* — a heading is scanned, not read, and the propag- stem carries the advertising reading loudest there. |
+| to propagate (product feature) | propagovat (se) | propagovať (sa) | Both forms by agent — *propagujeme iniciativy*, *iniciativy se propagují*. Reserved for describing the product; skill deliverables say *kaskádovat* (see Rules). **Never the noun** *propagace* / *propagácia* — in both languages it reads as advertising. |
 | level (L0 / L1) | úroveň | úroveň | *L0* / *L1* stay as they are. Company / team level: CS *firemní* / *týmová úroveň*, SK *firemná* / *tímová úroveň*. |
 | page | stránka | strana | SK *strana*, not *stránka* — matches the chrome (*na 3 stranách*). |
-| source(s) | podklady | podklady | The user's input documents in running prose. The rendered source list's heading is the fixed chrome *Zdroje* in both languages. |
-| strategy gap | mezera ve strategii | medzera v stratégii | The Gap Report page title is chrome: *Mezery ve strategii* / *Medzery v stratégii*. |
-| proposed content | odvozený obsah | odvodený obsah | "proposed" = CS *odvozený*, SK *odvodený* — not *navržený* / *navrhnutý*. |
+| source(s) | podklady | podklady | The user's input documents in running prose, matching the chrome sentences (*v podkladech nenalezeno*). The rendered source list's heading is the fixed chrome *Zdroje* in both languages. |
+| strategy gap | nedostatek ve strategii | nedostatok v stratégii | Pl. *nedostatky ve strategii* / *nedostatky v stratégii* — the Gap Report page title is chrome with the same words. *Mezera* / *medzera* is too literal: do not use it. |
+| proposed content | odvozený obsah | odvodený obsah | "proposed" = CS *odvozený*, SK *odvodený* — not *navržený* / *navrhnutý*: the skill composes the whole page, but the marker singles out only what the sources did not state. |
 | draft proposal (banner) | návrh | návrh | The banner sentence itself is chrome. |
-| leadership team | vedení firmy | vedenie firmy | Never "leadership tým". |
+| leadership team | vedení firmy | vedenie firmy | *Top management* is an acceptable alternative when the client's materials use it. Never "leadership tým". |
 | accountable team | odpovědný tým | zodpovedný tím | The alignment map's column. |
-| critical team | klíčový tým | kľúčový tím | The 1–3 teams that actually deliver an initiative. |
+| critical team | kritický tým | kritický tím | The 1–3 teams that actually deliver an initiative. The methodology's term — not *klíčový*. |
 
 ## Section headings and set phrases
 
@@ -84,25 +95,27 @@ The markdown templates' headings are phrases, not single terms — write them li
 |---|---|---|
 | One-pager · Level {{level}} | One-pager · Úroveň {{level}} | One-pager · Úroveň {{level}} |
 | Generated {{generated_at}} from: {{source_documents}} | Vygenerováno {{generated_at}} z podkladů: {{source_documents}} | Vygenerované {{generated_at}} z podkladov: {{source_documents}} |
-| Why we exist — Purpose | Proč existujeme — Smysl | Prečo existujeme — Zmysel |
-| Where we are going — Vision | Kam směřujeme — Vize | Kam smerujeme — Vízia |
-| What we do — Mission | Co děláme — Mise | Čo robíme — Misia |
+| Purpose | Poslání | Poslanie |
+| Vision | Vize | Vízia |
+| Mission | Mise | Misia |
 | Company Ambition | Ambice firmy | Ambícia firmy |
 | Team Ambition | Ambice týmu | Ambícia tímu |
 | Strategic Pillars | Strategické pilíře | Strategické piliere |
-| Initiative \| Picture of success \| Timing | Iniciativa \| Obraz úspěchu \| Termín | Iniciatíva \| Obraz úspechu \| Termín |
-| Enablers | Předpoklady | Predpoklady |
+| Definition of success | Definice úspěchu | Definícia úspechu |
+| Key area of initiatives \| Goal \| Timing *(L0 table)* | Klíčová oblast iniciativ \| Cíl \| Termín | Kľúčová oblasť iniciatív \| Cieľ \| Termín |
+| Key initiative \| Goal \| Timing *(L1 table)* | Klíčová iniciativa \| Cíl \| Termín | Kľúčová iniciatíva \| Cieľ \| Termín |
+| Enablers | Podmínky | Podmienky |
 | Values | Hodnoty | Hodnoty |
+| Narrative | Narativ | Naratív |
 | Open questions | Otevřené otázky | Otvorené otázky |
-| Success looks like | Jak vypadá úspěch | Ako vyzerá úspech |
 | Cascaded from | Kaskáduje z | Kaskáduje z |
-| Strategy Alignment Map | Mapa sladění strategie | Mapa zosúladenia stratégie |
+| Strategy Alignment Map | Mapa strategického sladění | Mapa strategického zosúladenia |
 | How the company strategy cascades into team one-pagers | Jak se firemní strategie kaskáduje do týmových one-pagerů | Ako sa firemná stratégia kaskáduje do tímových one-pagerov |
-| Core statements — propagated to every team | Klíčové výroky — přenášejí se do všech týmů | Kľúčové výroky — prenášajú sa do všetkých tímov |
+| Company statements — cascaded to every team | Firemní výroky — kaskádují se do všech týmů | Firemné výroky — kaskádujú sa do všetkých tímov |
 | Initiative → Team cascade | Kaskáda iniciativ do týmů | Kaskáda iniciatív do tímov |
 | Accountable team / Lands as (team pillar) | Odpovědný tým / Stává se (pilířem týmu) | Zodpovedný tím / Stáva sa (pilierom tímu) |
-| Enabler cascade — every team | Kaskáda předpokladů — všechny týmy | Kaskáda predpokladov — všetky tímy |
-| Team ambitions | Ambice týmů | Ambície tímov |
+| Enabler cascade — every team | Kaskáda podmínek — všechny týmy | Kaskáda podmienok — všetky tímy |
+| Team ambitions | Týmové ambice | Tímové ambície |
 | Open questions for the leadership team | Otevřené otázky pro vedení firmy | Otvorené otázky pre vedenie firmy |
 
 ## Fixed text for Czech and Slovak markdown deliverables

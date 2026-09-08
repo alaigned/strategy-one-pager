@@ -141,6 +141,7 @@ STRINGS = {
         # either way
         "gap_missing": "Not found in your sources",
         "gap_entry": "%s: %s — not stated in the sources",
+        "entity_field": "%s %s",
         "generated": "Generated %s",
         "kicker": "One-pager · Level %s",
         "cascades_from": " · cascades from <strong>%s</strong>",
@@ -188,7 +189,7 @@ STRINGS = {
         "lang": "cs",
         "banner": (
             "Návrh — části této kaskády jsou odvozené a v podkladech nepotvrzené. "
-            "Viz stránku Mezery ve strategii."
+            "Viz stránku Nedostatky ve strategii."
         ),
         "banner_split": (
             "Návrh — části této kaskády jsou odvozené a v podkladech nepotvrzené."
@@ -208,10 +209,36 @@ STRINGS = {
         "proposed_count_pages": ("na %d stránce", "na %d stránkách"),
         "gap_missing": "V podkladech nenalezeno",
         "gap_entry": "%s: %s — v podkladech neuvedeno",
+        # Element labels as printed. Bundle `label` fields ship in English by
+        # decision (localizing them is a product question); the page follows
+        # the glossary's headings table (references/terminology-glossary.md),
+        # which is the reviewed vocabulary. Keys are the labels bundles carry.
+        "labels": {
+            "Purpose": "Poslání",
+            "Vision": "Vize",
+            "Mission": "Mise",
+            "Company Strategic Ambition": "Ambice firmy",
+            "Team Strategic Ambition": "Ambice týmu",
+            "Pillars": "Strategické pilíře",
+            "Success": "Definice úspěchu",
+            "Goal": "Cíl",
+            "Enablers": "Podmínky",
+            "Values": "Hodnoty",
+            "Initiatives": "Klíčové iniciativy",
+            "Timing": "Termín",
+            "Narrative": "Narativ",
+            "Pillar": "Pilíř",
+            "Initiative": "Iniciativa",
+            "Enabler": "Podmínka",
+            "Value": "Hodnota",
+            "Name": "Název",
+            "Text": "Text",
+        },
+        "entity_field": "%s – %s",
         "generated": "Vygenerováno %s",
         "kicker": "One-pager · Úroveň %s",
         "cascades_from": " · kaskáduje z <strong>%s</strong>",
-        "gap_kicker": "Mezery ve strategii",
+        "gap_kicker": "Nedostatky ve strategii",
         # "věc" is feminine: 1 takes the singular with its relative pronoun in
         # the accusative ("kterou"), 2–4 the nominative plural, 5+ the genitive
         "gap_title": (
@@ -254,7 +281,7 @@ STRINGS = {
         "lang": "sk",
         "banner": (
             "Návrh — časti tejto kaskády sú odvodené a v podkladoch nepotvrdené. "
-            "Pozrite si stranu Medzery v stratégii."
+            "Pozrite si stranu Nedostatky v stratégii."
         ),
         "banner_split": (
             "Návrh — časti tejto kaskády sú odvodené a v podkladoch nepotvrdené."
@@ -274,10 +301,32 @@ STRINGS = {
         "proposed_count_pages": ("na %d strane", "na %d stranách"),
         "gap_missing": "Nenájdené v podkladoch",
         "gap_entry": "%s: %s — v podkladoch neuvedené",
+        "labels": {
+            "Purpose": "Poslanie",
+            "Vision": "Vízia",
+            "Mission": "Misia",
+            "Company Strategic Ambition": "Ambícia firmy",
+            "Team Strategic Ambition": "Ambícia tímu",
+            "Pillars": "Strategické piliere",
+            "Success": "Definícia úspechu",
+            "Goal": "Cieľ",
+            "Enablers": "Podmienky",
+            "Values": "Hodnoty",
+            "Initiatives": "Kľúčové iniciatívy",
+            "Timing": "Termín",
+            "Narrative": "Naratív",
+            "Pillar": "Pilier",
+            "Initiative": "Iniciatíva",
+            "Enabler": "Podmienka",
+            "Value": "Hodnota",
+            "Name": "Názov",
+            "Text": "Text",
+        },
+        "entity_field": "%s – %s",
         "generated": "Vygenerované %s",
         "kicker": "One-pager · Úroveň %s",
         "cascades_from": " · kaskáduje z <strong>%s</strong>",
-        "gap_kicker": "Medzery v stratégii",
+        "gap_kicker": "Nedostatky v stratégii",
         # "vec" is feminine, like the Czech row: 1 singular with the accusative
         # relative pronoun ("ktorú"), 2–4 nominative plural, 5+ genitive
         "gap_title": (
@@ -330,13 +379,17 @@ CTA_HOST = CTA_URL.split("://", 1)[1]
 # attribution.ref wins when present (per-run identity: the JSON, every render
 # and a later import carry the same ref); this generated one is the fallback
 # for bundles without the block. It reaches us only when someone follows the
-# link, and nothing stores it: the registration page never reads the param.
-# Attributing a registration back to its ref — so N registrations sharing one
-# ref = one artifact traveling — is planned, not built. The published privacy
-# policy at https://try.alaigned.com/skill/privacy states today's behaviour and
-# has to change on the day that does.
+# link, and nothing stores it: the registration page counts the arrival and
+# never keeps the param. Attributing a registration back to its ref — so N
+# registrations sharing one ref = one artifact traveling — is planned, not
+# built. The published privacy policy at https://try.alaigned.com/skill/privacy
+# states today's behaviour and has to change on the day that does.
+#
+# The link lands on the request-access page, not the host's root: a reader of
+# a rendered document has already used the skill, and the root is the funnel
+# entry that offers the download.
 CTA_REF = str(uuid.uuid4())
-CTA_HREF = "%s/?ref=%s" % (CTA_URL, CTA_REF)
+CTA_HREF = "%s/request-access?ref=%s" % (CTA_URL, CTA_REF)
 
 
 def cta_label(title):
@@ -362,6 +415,21 @@ def trim_label(label):
     """Schema labels can carry a parenthetical ("Goal (picture of success)")
     — too long for narrow label columns; keep the term."""
     return re.sub(r"\s*\(.*\)$", "", label)
+
+
+def display_label(label):
+    """A schema label as printed: parenthetical trimmed, then the language's
+    own term when --lang names one (S["labels"], keyed by the English label
+    the bundle carries). A numbered label ("Success 1") translates its stem
+    and keeps the number. English has no table and prints labels verbatim."""
+    term = trim_label(label or "")
+    terms = S.get("labels")
+    if not terms:
+        return term
+    match = re.fullmatch(r"(.*\S)\s+(\d+)", term)
+    if match and match.group(1) in terms:
+        return "%s %s" % (terms[match.group(1)], match.group(2))
+    return terms.get(term, term)
 
 
 def split_proposed(text):
@@ -478,9 +546,9 @@ def _entry_label(entity_label, key, node):
     """The entry's element label, prefixed with the enclosing entity's own
     label where the field label alone is generic — "Pillar name", "Enabler
     text", while "Purpose" or "Goal" already name themselves."""
-    element = trim_label(node.get("label") or "") or key
+    element = display_label(node.get("label") or "") or key
     if key in GENERIC_FIELDS and entity_label:
-        return "%s %s" % (entity_label, element.lower())
+        return S["entity_field"] % (display_label(entity_label), element.lower())
     return element
 
 
@@ -513,7 +581,7 @@ def value_html(node, gaps, page_title, css="value"):
     explicit gap. No per-item badge: the page's draft banner and the Gap
     Report's Proposed-content section carry that."""
     text = node.get("textValue")
-    label = node.get("label", "")
+    label = display_label(node.get("label", ""))
 
     if text is None:
         if node.get("mandatory"):
@@ -572,7 +640,7 @@ def core_rows_html(content, gaps, page_title):
             # a null optional statement renders as nothing, never a hollow row
             continue
         label = node.get("label") or STATEMENT_HEADINGS.get(key, key)
-        heading = trim_label(label)
+        heading = display_label(label)
         rows.append(
             '<div class="core-label">%s</div><div class="core-cell">%s</div>'
             % (esc(heading.upper()), body)
@@ -615,7 +683,7 @@ def entity_body_parts(entity, gaps, page_title, chars_per_line):
         if is_text_node(node):
             body = value_html(node, gaps, page_title)
             if body:
-                label = trim_label(node.get("label", key))
+                label = display_label(node.get("label", key))
                 nchars = len(label) + len(node.get("textValue") or "")
                 parts.append(
                     (
@@ -695,11 +763,28 @@ PILLAR_LINE_MM = 4.4
 # Estimates deliberately run ~15-20% above real heights (they must err tall),
 # so the engage threshold lives in estimate-space: est 220 ≈ a real ~185mm
 # page, right at the sheet boundary. Ordinary pages stay on the single-sheet
-# path and render exactly as before.
+# path and render exactly as before. The per-sheet budget the paginator packs
+# against lives in the same space — budgeting real millimetres against tall
+# estimates paid the bias twice and left sheets two thirds full;
+# Chromium measured the packed sheets at 120 of 181 usable mm. The budget sits
+# a little under the threshold: a sheet packed to 220 with the least-biased
+# blocks (long initiative goals estimate only ~20% tall) measured 4mm over.
 OP_ENGAGE_MM = 220
-OP_HEADER_MM = 34
+OP_SHEET_EST_MM = 215
+OP_HEADER_MM = 36  # measured 31.3mm plus its 4mm margin; budgeted tall
+OP_BAND_OVERHEAD_MM = 8  # band-label padding, body padding, list margin, band margin
 OP_BANNER_MM = 10  # the draft banner box (6.5mm) plus its margin, when shown
-OP_CHIP_ROW_MM = 9
+# A chip line: 9pt at line-height 1.45 (4.6mm) plus the chip's 2.4mm of
+# padding and the 2mm flex gap to the next line. Chips wrap (`.chips` is
+# flex-wrap), so a band is as tall as its wrapped lines, not its collections:
+# counting collections took a seven-value band for 9mm, the page stayed on the
+# single-sheet path and the browser cut it. Glyphs run ~1.7mm at 9pt
+# like the pillar body; budgeted at 1.9 so greedy wrapping's ragged right
+# edge still estimates tall.
+OP_CHIP_LINE_MM = 9
+OP_CHIP_CHAR_MM = 1.9
+OP_CHIP_PAD_MM = 8  # 3mm padding each side plus the 2mm gap to the next chip
+OP_CHIP_ROW_WIDTH_MM = 234  # the 1fr track beside the 36mm label and 3mm gap
 NULL_VALUE_CHARS = 30  # a rendered "Not found in your sources" gap line
 
 
@@ -711,9 +796,11 @@ def pillar_chars_per_line(cols):
 
 
 def pillar_name_chars(cols):
-    # the name bar is bold 11pt — noticeably fewer characters per line
+    # the name bar is bold 11pt — noticeably fewer characters per line. Measured
+    # in Chromium at four columns: 24 characters fit one line of the 51mm bar,
+    # 46 take two, 52 take three — ~2.05mm per glyph, budgeted 2.1.
     cell_mm = (234 - 3 * (cols - 1)) / cols - 5
-    return max(10, int(cell_mm / 2.3))
+    return max(10, int(cell_mm / 2.1))
 
 
 def pillar_cells(pillars, gaps, page_title):
@@ -725,7 +812,9 @@ def pillar_cells(pillars, gaps, page_title):
         name = pillar.get("name", {})
         title = esc(split_proposed(name.get("textValue") or "")[0])
         parts = entity_body_parts(pillar, gaps, page_title, chars)
-        name_mm = 4 + 5.5 * est_lines_n(max(len(title), 1), pillar_name_chars(cols))
+        # measured 10.4 / 16.0 / 21.7mm for one / two / three lines: 4.75 + 5.65
+        # per line, budgeted 5 + 5.8 so the bar never estimates short
+        name_mm = 5 + 5.8 * est_lines_n(max(len(title), 1), pillar_name_chars(cols))
         cells.append((title, parts, name_mm))
     return cols, cells
 
@@ -739,7 +828,7 @@ def pillar_band_html(pillars, cols, cells_html):
     return (
         '<section class="pillars"><div class="band-label">%s</div>'
         '<div class="pillar-cells cols-%d">%s</div></section>'
-        % (esc(pillars.get("label", "Pillars").upper()), cols, "".join(cells_html))
+        % (esc(display_label(pillars.get("label", "Pillars")).upper()), cols, "".join(cells_html))
     )
 
 
@@ -752,7 +841,7 @@ def pillar_cell_html(title, parts):
 
 def band_est_mm(cols, cells):
     """A grid row is as tall as its tallest cell; rows of `cols` cells stack."""
-    total = 8
+    total = OP_BAND_OVERHEAD_MM
     for row_start in range(0, len(cells), cols):
         total += max(cell_est_mm(c) for c in cells[row_start : row_start + cols])
     return total
@@ -766,7 +855,7 @@ def pillar_band_chunks(pillars, cols, cells, budgets):
     spent columns keep an empty cell to hold their grid track, and each
     column reserves its own repeated name bar's estimated height. Yields one
     band-HTML per sheet; `budgets` yields each sheet's body budget."""
-    label = pillars.get("label", "Pillars")
+    label = display_label(pillars.get("label", "Pillars"))
     first = True
     for row_start in range(0, len(cells), cols):
         group = [
@@ -780,7 +869,8 @@ def pillar_band_chunks(pillars, cols, cells, budgets):
                 if not parts:
                     sheet_cells.append('<article class="pillar"></article>')
                     continue
-                used = name_mm
+                # the band's own chrome rides on every sheet, like the name bar
+                used = name_mm + OP_BAND_OVERHEAD_MM
                 take = []
                 while parts and (not take or used + parts[0][3] <= budget):
                     used += parts[0][3]
@@ -793,22 +883,41 @@ def pillar_band_chunks(pillars, cols, cells, budgets):
             first = False
 
 
+def chip_texts(collection):
+    """The printed text of each chip in a collection, markers stripped."""
+    texts = []
+    for item in collection["content"]:
+        primary = item.get("content")
+        if is_text_node(primary) and isinstance(primary.get("textValue"), str):
+            clean, _marks = split_proposed(primary["textValue"])
+            texts.append(clean)
+    return texts
+
+
+def chip_band_est_mm(collections):
+    """The chip band's height from its wrapped chip lines: each row is its
+    chips' widths packed into the 234mm track, one OP_CHIP_LINE_MM per line,
+    plus the row's 2mm margin; the band adds its 3mm padding and border."""
+    total = 4
+    for collection in collections:
+        widths = [len(t) * OP_CHIP_CHAR_MM + OP_CHIP_PAD_MM for t in chip_texts(collection)]
+        if widths:
+            lines = est_lines_n(int(sum(widths)), OP_CHIP_ROW_WIDTH_MM)
+            total += 2 + OP_CHIP_LINE_MM * lines
+    return total
+
+
 def chip_band_html(collections, gaps, page_title):
     """Enablers / values as chip rows — chips only, like the product export
     (narratives stay in the bundle and the markdown pages; the print band
     keeps a single clear owner per row)."""
     rows = []
     for collection in collections:
-        chips = []
-        for item in collection["content"]:
-            primary = item.get("content")
-            if is_text_node(primary) and isinstance(primary.get("textValue"), str):
-                clean, _marks = split_proposed(primary["textValue"])
-                chips.append('<span class="chip">%s</span>' % esc(clean))
+        chips = ['<span class="chip">%s</span>' % esc(t) for t in chip_texts(collection)]
         if chips:
             rows.append(
                 '<div class="chip-row"><div class="band-label">%s</div><div class="chips">%s</div></div>'
-                % (esc(collection.get("label", "").upper()), "".join(chips))
+                % (esc(display_label(collection.get("label", "")).upper()), "".join(chips))
             )
     if not rows:
         return ""
@@ -895,7 +1004,7 @@ def one_pager_html(one_pager, by_ref, bundle, gaps, banner_text):
         header_mm
         + core_mm
         + sum(band_est_mm(cols, cells) for _c, cols, cells in bands)
-        + (chips.count("chip-row") * OP_CHIP_ROW_MM + 4 if chips else 0)
+        + (chip_band_est_mm(chip_like) if chips else 0)
     )
 
     def sheet(body, continued):
@@ -926,11 +1035,11 @@ def one_pager_html(one_pager, by_ref, bundle, gaps, banner_text):
         return sheet(body, False)
 
     def budget_gen():
-        # 185, not the sheet's 190: a few mm of slack per sheet so a small
-        # estimation miss spills nothing (the footer would go first)
-        yield max(50, 185 - header_mm - core_mm)
+        # estimate-space, like every term subtracted from it; the ~15-20% the
+        # estimates run tall is the slack that keeps a small miss from spilling
+        yield max(50, OP_SHEET_EST_MM - header_mm - core_mm)
         while True:
-            yield max(70, 185 - header_mm)
+            yield max(70, OP_SHEET_EST_MM - header_mm)
 
     budgets = budget_gen()
     chunks = [
@@ -1922,8 +2031,8 @@ def _pdf_entity_parts(entity, gaps, page_title):
             if value[0] == "gap":
                 # gap entries carry the raw label with the HTML walkers' ""
                 # fallback — the two artifacts must count identical gaps
-                gaps.append(S["gap_entry"] % (page_title, node.get("label", "")))
-            parts.append(("row", trim_label(node.get("label", key)), value))
+                gaps.append(S["gap_entry"] % (page_title, display_label(node.get("label", ""))))
+            parts.append(("row", display_label(node.get("label", key)), value))
         elif is_collection(node):
             for item in node["content"]:
                 name = item.get("name")
@@ -1944,7 +2053,7 @@ def _pdf_extract_op(one_pager, by_ref, gaps):
     ambition = content.get("companyAmbition")
     ambition_val = _pdf_val(ambition) if is_text_node(ambition) else None
     if ambition_val == ("gap",):
-        gaps.append(S["gap_entry"] % (title, ambition.get("label", "")))
+        gaps.append(S["gap_entry"] % (title, display_label(ambition.get("label", ""))))
 
     core = []
     for key, node in content.items():
@@ -1954,9 +2063,9 @@ def _pdf_extract_op(one_pager, by_ref, gaps):
         if value is None:
             continue
         if value[0] == "gap":
-            gaps.append(S["gap_entry"] % (title, node.get("label", "")))
+            gaps.append(S["gap_entry"] % (title, display_label(node.get("label", ""))))
         label = node.get("label") or STATEMENT_HEADINGS.get(key, key)
-        core.append((trim_label(label), value))
+        core.append((display_label(label), value))
 
     collections = [v for v in content.values() if is_collection(v)]
     pillar_bands, chip_bands = [], []
@@ -1967,7 +2076,7 @@ def _pdf_extract_op(one_pager, by_ref, gaps):
                 name = pillar.get("name", {})
                 pillar_title = split_proposed(name.get("textValue") or "")[0]
                 pillars.append((pillar_title, _pdf_entity_parts(pillar, gaps, title)))
-            pillar_bands.append((coll.get("label", "Pillars"), pillars))
+            pillar_bands.append((display_label(coll.get("label", "Pillars")), pillars))
         else:
             chips = []
             for item in coll["content"]:
@@ -1975,7 +2084,7 @@ def _pdf_extract_op(one_pager, by_ref, gaps):
                 if is_text_node(primary) and isinstance(primary.get("textValue"), str):
                     chips.append(split_proposed(primary["textValue"])[0])
             if chips:
-                chip_bands.append((coll.get("label", ""), chips))
+                chip_bands.append((display_label(coll.get("label", "")), chips))
 
     return {
         "title": title,
@@ -4007,7 +4116,7 @@ def main():
     attribution_ref = (bundle.get("attribution") or {}).get("ref")
     if attribution_ref:
         CTA_REF = attribution_ref
-        CTA_HREF = "%s/?ref=%s" % (CTA_URL, CTA_REF)
+        CTA_HREF = "%s/request-access?ref=%s" % (CTA_URL, CTA_REF)
     output = args.output or args.bundle.with_suffix(".html")
     output.write_text(render(bundle), encoding="utf-8")
     print(f"rendered {output} ({len(bundle['onePagers'])} one-pager(s) + gap report)")

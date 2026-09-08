@@ -7,14 +7,14 @@
   },
   "metadata": {
     "description": "Alaigned's Claude Code plugins",
-    "version": "0.12.4"
+    "version": "0.13.2"
   },
   "plugins": [
     {
       "name": "alaigned-strategy",
       "source": "./",
       "description": "Reads the decks, memos and plans you already have and writes a company one-pager plus a linked one-pager for every team — each one provably derived from the company's, and checked against the Alaigned methodology.",
-      "version": "0.12.4"
+      "version": "0.13.2"
     }
   ]
 }

@@ -12,15 +12,15 @@
 open questions.
 {{/if}}
 
-## Why we exist — Purpose
+## Purpose
 
 {{purpose}}
 
-## Where we are going — Vision
+## Vision
 
 {{vision}}
 
-## What we do — Mission
+## Mission
 
 {{mission}}
 
@@ -42,9 +42,10 @@ open questions.
 
 {{#if pillar.origin}}*Cascaded from: {{pillar.origin}}*{{/if}}
 
-**Success looks like:** {{pillar.success_definition_1}}{{#if pillar.success_definition_2}} · {{pillar.success_definition_2}}{{/if}}
+**Definition of success:** {{pillar.success_definition_1}}{{#if pillar.success_definition_2}} · {{pillar.success_definition_2}}{{/if}}
 
-| Initiative | Picture of success | Timing |
+<!-- initiative_label: "Key area of initiatives" on the L0 page, "Key initiative" on L1 pages. -->
+| {{initiative_label}} | Goal | Timing |
 |---|---|---|
 | {{initiative.name}} | {{initiative.goal}} | {{initiative.timing}} |
 
