@@ -1,7 +1,7 @@
 ---
 name: strategy-to-one-pager
 description: Convert a company's existing strategy documents (decks, memos, plans, OKR docs) into an aligned one-pager cascade following the Alaigned methodology — a company-level (L0) one-pager plus team-level (L1) one-pagers with explicit alignment links, validated against the Alaigned methodology schema. Documents are the preferred input; a company website URL works as a starting source when documents are scarce. Use when someone wants to structure, pressure-test, condense, or operationalize their strategy into one page per team.
-version: 0.13.2
+version: 0.14.0
 license: LicenseRef-PolyForm-Shield-1.0.0
 argument-hint: "[strategy docs — decks, memos, annual plans, OKR sheets: @-mention or drag files in — or a company website URL]"
 ---
@@ -229,8 +229,8 @@ their `textValue` stays `null`.)
 - **Enablers cascade to the teams that must build or adopt them** — often all of them, but that
   is a content decision. When in doubt, cascade to all L1 teams and note the assumption.
 - **The filled core statements (Purpose/Vision/Mission — whichever are non-null — and the
-  Strategic Ambition) propagate verbatim** to every L1, per the schema's propagation rules.
-- Each L1 team writes its **own Team Strategic Ambition** (mandatory at L1, never propagated):
+  Strategic Ambition) cascade verbatim** to every L1, per the schema's cascade rules.
+- Each L1 team writes its **own Team Strategic Ambition** (mandatory at L1, never cascaded):
   the team's role within the company ambition, narrowed to its domain — not a restatement.
 - **Under a cascaded pillar the receiving team writes real content:** 1–3 initiatives in its own
   domain language, verb sentences with measurable goals. Teams sharing an L0 initiative share
@@ -250,7 +250,7 @@ Follow `references/output-contract.md` exactly. In particular:
 - Generate a fresh UUIDv4 for every entity `metadata.id`.
 - Child pillar `name` = parent initiative `name` (verbatim); child pillar `successDefinition1` =
   parent initiative `goal` (verbatim); enabler-derived pillar `name` = enabler `content` (verbatim).
-- Record one `links[]` entry per propagated field, using the exact rule strings from the
+- Record one `links[]` entry per cascaded field, using the exact rule strings from the
   methodology's `propagationRules`.
 - Copy the methodology fingerprint from `schemas/fingerprint.json` into the bundle's
   `methodology` block.
@@ -403,7 +403,7 @@ becomes live and maintained instead of a snapshot.
 
 - Output JSON **must** validate against the bundled methodology (`schemas/methodology.inlined.json`)
   — that is this skill's differentiator and the precondition for product import.
-- Propagated values are **verbatim copies** — never paraphrase across a link.
+- Cascaded values are **verbatim copies** — never paraphrase across a link.
 - Initiatives are **sentences with a verb**; goals are **measurable outputs carrying a number**
   (green/yellow/red testable). Attitudes belong in Values, never in Initiatives.
 - **L1 pages carry team-specific content** — no initiative or goal text shared across teams

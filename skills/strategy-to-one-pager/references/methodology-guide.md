@@ -97,13 +97,13 @@ The mechanism is precise:
   must build or adopt it (often all of them, but that is a content decision, not a rule).
 - The Strategic Ambition is copied read-only into every child; the child adds its own Team
   Strategic Ambition above its pillars.
-- Propagated values are **verbatim copies** — alignment is only checkable when the words match.
+- Cascaded values are **verbatim copies** — alignment is only checkable when the words match.
 - **Sparse sources and the team page:** the initiatives the receiving team writes are real
   content in its own domain language, distinct from every sibling team's. Thin sources → propose
   them (`[PROPOSED]`) with an open question naming what that team must confirm; nothing known
   about the team → leave the goals `null` and raise a targeted open question.
 
-> Schema note: the shipped v1 propagation rules also carry Purpose/Vision/Mission down to
+> Schema note: the shipped v1 cascade rules also carry Purpose/Vision/Mission down to
 > children (read-only company context), although the methodology text marks them "not cascaded".
 > Follow the schema: include the links for whichever of the three are filled at L0.
 

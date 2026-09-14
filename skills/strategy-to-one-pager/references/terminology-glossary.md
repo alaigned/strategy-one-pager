@@ -22,12 +22,14 @@ what you write when the cascade is Czech or Slovak.
   is not the term.
 - **Decline borrowed terms per the target grammar** — *v one-pageru*, *z one-pagerov* — never
   parked in the English nominative mid-sentence.
-- **The methodology cascades; the product propagates.** *Cascade* / *kaskáda* names the
-  phenomenon — priorities handed from one level to the next. *Propagation* / *propagace* is the
-  product's name for the approval step that sends a cascade down, and in Czech and Slovak the
-  noun reads as advertising. The skill has no such step, so its deliverables say *kaskádovat* /
-  *kaskádovať*; the only propag- stem in the output is the CTA footer, which describes the
-  product and is fixed text.
+- **Everything cascades — the methodology and the product alike.** *Cascade* / *kaskáda* names
+  the phenomenon — priorities handed from one level to the next — and, since the 2026-09
+  vocabulary decision, it also names the product's step that sends a cascade down. Write
+  *kaskádovat* / *kaskádovať* everywhere, including when you describe what Alaigned itself does.
+  *Propagovat* / *propagovať* is retired, and the noun *propagace* / *propagácia* was never
+  usable — in both languages it reads as advertising. The propag- stem survives only in
+  identifiers that are never spelled out in a deliverable (the `propagationRules` schema key,
+  the product's `propagations` rows).
 - **Bundle `label` fields currently ship with the schema's English defaults.** Localizing them is
   a pending product decision — do not translate them ad hoc. The renderer prints them in the
   language's terms from the headings table below, so the page reads Czech or Slovak while the
@@ -76,7 +78,7 @@ what you write when the cascade is Czech or Slovak.
 | cascade (noun) | kaskáda | kaskáda | The product's word; keep it. |
 | to cascade | kaskádovat | kaskádovať | Reflexive or not by agent: *iniciativy se kaskádují* (the initiative is handed down), *kaskádujeme iniciativy* (we hand it down). Origin lines read *Kaskáduje z: X* in both languages, matching the rendered page's kicker. Slovak reviewers may prefer *nadväzuje na* in running prose; the chrome string stays as it is. |
 | alignment | sladění | zosúladenie | |
-| to propagate (product feature) | propagovat (se) | propagovať (sa) | Both forms by agent — *propagujeme iniciativy*, *iniciativy se propagují*. Reserved for describing the product; skill deliverables say *kaskádovat* (see Rules). **Never the noun** *propagace* / *propagácia* — in both languages it reads as advertising. |
+| ~~to propagate~~ (retired 2026-09) | — | — | The product cascades too now: write *kaskádovat* / *kaskádovať* (row above). Never *propagace* / *propagácia*, no longer *propagovat* / *propagovať*. The stem lives on only in identifiers (the `propagationRules` schema key, the `propagations` rows), never written out in a deliverable. |
 | level (L0 / L1) | úroveň | úroveň | *L0* / *L1* stay as they are. Company / team level: CS *firemní* / *týmová úroveň*, SK *firemná* / *tímová úroveň*. |
 | page | stránka | strana | SK *strana*, not *stránka* — matches the chrome (*na 3 stranách*). |
 | source(s) | podklady | podklady | The user's input documents in running prose, matching the chrome sentences (*v podkladech nenalezeno*). The rendered source list's heading is the fixed chrome *Zdroje* in both languages. |
@@ -139,7 +141,7 @@ Czech, one-pager:
 
 ```markdown
 **Oživte svou strategii → [try.alaigned.com](https://try.alaigned.com)**
-Tato stránka je snímek okamžiku. Alaigned udržuje kaskádu živou — změny se propagují mezi
+Tato stránka je snímek okamžiku. Alaigned udržuje kaskádu živou — změny se kaskádují mezi
 úrovněmi, týmy je explicitně přijímají nebo rozporují a stav vyhodnocení je vidět na každé stránce.
 ```
 
@@ -147,7 +149,7 @@ Slovak, one-pager:
 
 ```markdown
 **Oživte svoju stratégiu → [try.alaigned.com](https://try.alaigned.com)**
-Táto strana je snímka okamihu. Alaigned udržiava kaskádu živú — zmeny sa propagujú medzi
+Táto strana je snímka okamihu. Alaigned udržiava kaskádu živú — zmeny sa kaskádujú medzi
 úrovňami, tímy ich výslovne prijímajú alebo voči nim namietajú a stav vyhodnotenia je vidieť na
 každej strane.
 ```

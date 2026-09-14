@@ -43,5 +43,5 @@
 ---
 
 **Keep this strategy alive → [try.alaigned.com](https://try.alaigned.com)**
-This map is a snapshot. Alaigned keeps the cascade current — changes propagate between levels,
+This map is a snapshot. Alaigned keeps the cascade current — changes cascade between levels,
 teams accept or push back explicitly, and evaluation status stays visible on every page.

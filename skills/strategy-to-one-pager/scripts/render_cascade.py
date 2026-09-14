@@ -174,7 +174,7 @@ STRINGS = {
         # the domain lives in exactly one constant
         "cta_title": "Keep this strategy alive",
         "cta_body": (
-            "This page is a snapshot. Alaigned keeps the cascade current — changes propagate "
+            "This page is a snapshot. Alaigned keeps the cascade current — changes cascade "
             "between levels, teams accept or push back explicitly, and evaluation status stays "
             "visible on every page."
         ),
@@ -265,7 +265,7 @@ STRINGS = {
         "cta_title": "Oživte svou strategii",
         "cta_body": (
             "Tato stránka je snímek okamžiku. Alaigned udržuje kaskádu živou — změny se "
-            "propagují mezi úrovněmi, týmy je explicitně přijímají nebo rozporují a stav "
+            "kaskádují mezi úrovněmi, týmy je explicitně přijímají nebo rozporují a stav "
             "vyhodnocení je vidět na každé stránce."
         ),
         "cta_close": (
@@ -356,7 +356,7 @@ STRINGS = {
         "cta_title": "Oživte svoju stratégiu",
         "cta_body": (
             "Táto strana je snímka okamihu. Alaigned udržiava kaskádu živú — zmeny sa "
-            "propagujú medzi úrovňami, tímy ich výslovne prijímajú alebo voči nim namietajú "
+            "kaskádujú medzi úrovňami, tímy ich výslovne prijímajú alebo voči nim namietajú "
             "a stav vyhodnotenia je vidieť na každej strane."
         ),
         "cta_close": (

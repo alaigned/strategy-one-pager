@@ -650,7 +650,7 @@ def check_links(bundle, methodology, by_ref, findings):
         if parent_value != child_value:
             findings.error(
                 "links",
-                f"{label}: values differ — propagation must be a verbatim copy "
+                f"{label}: values differ — cascade must be a verbatim copy "
                 f"({parent_value!r} vs {child_value!r})",
             )
 

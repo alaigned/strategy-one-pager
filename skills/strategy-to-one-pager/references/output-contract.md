@@ -100,7 +100,7 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
 - **Top-level `metadata`** of each one-pager: `{ "schemaVersion": "v1" }`.
 
 - **Required at L0**: `purpose`, `vision`, `mission`, `companyAmbition`, `pillars`, `enablers`.
-  **Required at L1**: `teamAmbition`, `pillars`. (Include the propagated core fields on L1 too —
+  **Required at L1**: `teamAmbition`, `pillars`. (Include the cascaded core fields on L1 too —
   they're how alignment shows.)
 
 - **Required per entity**: pillar → `label`, `metadata`, `name`, `initiatives`; initiative →
@@ -122,17 +122,17 @@ pillars.content.<pillarId>.initiatives.content.<initiativeId>.goal.textValue
 enablers.content.<enablerId>.content.textValue
 ```
 
-This matches the Alaigned product's propagation paths, which is what makes the bundle
+This matches the Alaigned product's cascade paths, which is what makes the bundle
 import-ready.
 
 ## Links — the alignment model
 
-One `links[]` entry per propagated field. A link mirrors an *accepted* propagation in the product:
+One `links[]` entry per cascaded field. A link mirrors an *accepted* cascade in the product:
 the bundle is an **interchange format for import**, so it deliberately follows the product's
 *current* storage model (Propagation rows), not a hypothetical future one. If the product moves
-propagations into one-pager content (a refactor the team has discussed), the bundle follows in a
-new `bundleVersion` — the envelope pins the version precisely so this migration is explicit
-rather than silent.
+cascades out of those rows into one-pager content (a refactor the team has discussed), the bundle
+follows in a new `bundleVersion` — the envelope pins the version precisely so this migration is
+explicit rather than silent.
 
 ```json
 {
@@ -162,11 +162,11 @@ Rules (validator-enforced):
 
 - `parentPath` must match `parentRule` and `childPath` must match `childRule` (same segments,
   with each `*` replaced by a concrete entity id).
-- Both paths must resolve, and **the values at both ends must be equal** — propagation is a
+- Both paths must resolve, and **the values at both ends must be equal** — a cascade is a
   verbatim copy.
 - `parentRef`/`childRef` must be an actual parent→child edge (`child.parentRef == parentRef`).
 - Each (`parentRef`, `childRef`, `parentPath`, `childPath`) tuple appears **once** — a repeated
-  link is the same accepted propagation stated twice, and is rejected.
+  link is the same accepted cascade stated twice, and is rejected.
 
 Cascade completeness (validator-enforced):
 
