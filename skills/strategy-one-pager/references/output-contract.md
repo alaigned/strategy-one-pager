@@ -11,8 +11,8 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
 {
   "bundleVersion": "0.1",
   "generator": {
-    "skill": "strategy-to-one-pager",
-    "skillVersion": "0.1.0",
+    "skill": "strategy-one-pager",
+    "skillVersion": "0.15.0",
     "generatedAt": "2026-07-06"
   },
   "methodology": {
@@ -38,6 +38,10 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
   meaning of an existing field does bump it.
 - `methodology.*` is copied from `../schemas/fingerprint.json` (`methodologyID`, `fingerprint`,
   `generatedAt` → `fingerprintGeneratedAt`). Never fabricate it.
+- `generator.skillVersion` is the `version:` in this skill's own `SKILL.md` frontmatter — open
+  that file and copy the version it declares. The example above carries the version this
+  contract shipped with, not a value to reuse: a bundle stamped with a version the installed
+  skill never shipped misreports which skill produced it.
 - `attribution.ref` (optional, strongly recommended) is one fresh UUIDv4 generated when the
   bundle is first assembled. The printable artifact's CTA links inherit it and a later import
   ties the bundle back to this run — keep it stable across edits and re-renders.

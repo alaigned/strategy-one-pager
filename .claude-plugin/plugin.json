@@ -1,15 +1,15 @@
 {
   "name": "alaigned-strategy",
   "displayName": "Alaigned Strategy",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "Reads the decks, memos and plans you already have and writes a company one-pager plus a linked one-pager for every team — each one provably derived from the company's, and checked against the Alaigned methodology.",
   "author": {
     "name": "Alaigned",
     "email": "support@alaigned.com",
-    "url": "https://try.alaigned.com"
+    "url": "https://alaigned.com"
   },
-  "homepage": "https://try.alaigned.com",
-  "repository": "https://github.com/alaigned/strategy-to-one-pager",
-  "keywords": ["strategy", "one-pager", "alignment", "okr", "planning"],
+  "homepage": "https://alaigned.com/strategy-one-pager-skill",
+  "repository": "https://github.com/alaigned/strategy-one-pager",
+  "keywords": ["strategy", "one-pager", "cascade", "alignment", "okr", "planning", "claude-code", "agent-skills"],
   "license": "LicenseRef-PolyForm-Shield-1.0.0"
 }

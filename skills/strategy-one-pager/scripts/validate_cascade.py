@@ -31,6 +31,9 @@ Checks, in order:
      children that adopt them (a content decision, not a rule)
   7. methodology ceilings as warnings — values read from the packaged
      artifact's hierarchy[].limits
+  8. generator.skillVersion against the version in the sibling SKILL.md, as a
+     warning — a bundle stamped with a version the installed skill never shipped
+     means the run did not read the skill's own frontmatter
 
 Exit code 0 = valid; 1 = validation errors; 2 = usage/environment problem.
 """
@@ -786,6 +789,38 @@ def check_limits(bundle, methodology, findings):
                 )
 
 
+SKILL_VERSION_RE = re.compile(r"^version:\s*([^\s#]+)", re.M)
+
+
+def skill_version(skill_dir):
+    """The `version:` in the skill's own SKILL.md frontmatter, or None when the
+    file is not beside the script — the connector packaging serves the scripts
+    flat, without SKILL.md, and a missing file is not a bundle defect."""
+    path = Path(skill_dir) / "SKILL.md"
+    if not path.exists():
+        return None
+    match = SKILL_VERSION_RE.search(path.read_text(encoding="utf-8")[:2000])
+    return match.group(1).strip().strip("\"'") if match else None
+
+
+def check_skill_version(bundle, skill_dir, findings):
+    """A bundle records the skill version that produced it. When it disagrees
+    with the installed SKILL.md, the run worked from something other than this
+    skill's frontmatter — typically by copying the version out of the
+    output-contract reference's envelope example, which shows the version that
+    contract shipped with. A warning, never an error: the bundle itself is
+    still valid, and the version is metadata the import does not depend on."""
+    stamped = (bundle.get("generator") or {}).get("skillVersion")
+    installed = skill_version(skill_dir)
+    if not installed or not stamped or stamped == installed:
+        return
+    findings.warning(
+        "generator",
+        f"generator.skillVersion is {stamped!r} but the installed skill is "
+        f"{installed!r} — re-read SKILL.md and stamp the version it declares",
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("bundle", type=Path)
@@ -833,6 +868,7 @@ def main():
     check_proposed_markers(bundle, findings)
     check_content_schemas(bundle, methodology, findings, engine)
     check_limits(bundle, methodology, findings)
+    check_skill_version(bundle, args.skill_dir, findings)
     by_ref = check_structure(bundle, findings)
     if not findings.errors:
         check_links(bundle, methodology, by_ref, findings)

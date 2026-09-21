@@ -1,4 +1,4 @@
-# Strategy → One-Pager Cascade — example documents
+# Strategy One-Pager — example documents
 
 Everything in this folder is here so you can exercise the skill end to end without
 supplying a strategy document of your own.

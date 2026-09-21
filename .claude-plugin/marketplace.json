@@ -3,18 +3,18 @@
   "owner": {
     "name": "Alaigned",
     "email": "support@alaigned.com",
-    "url": "https://try.alaigned.com"
+    "url": "https://alaigned.com"
   },
   "metadata": {
     "description": "Alaigned's Claude Code plugins",
-    "version": "0.14.0"
+    "version": "0.15.0"
   },
   "plugins": [
     {
       "name": "alaigned-strategy",
       "source": "./",
       "description": "Reads the decks, memos and plans you already have and writes a company one-pager plus a linked one-pager for every team — each one provably derived from the company's, and checked against the Alaigned methodology.",
-      "version": "0.14.0"
+      "version": "0.15.0"
     }
   ]
 }

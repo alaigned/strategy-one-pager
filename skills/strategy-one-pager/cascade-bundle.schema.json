@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Alaigned strategy cascade bundle",
-  "description": "Envelope for the strategy-to-one-pager skill output. Each onePagers[].content is additionally validated against schemas/methodology.inlined.json hierarchy[level].onePagerSchema.",
+  "description": "Envelope for the strategy-one-pager skill output. Each onePagers[].content is additionally validated against schemas/methodology.inlined.json hierarchy[level].onePagerSchema.",
   "type": "object",
   "required": ["bundleVersion", "generator", "methodology", "company", "onePagers", "links"],
   "additionalProperties": false,

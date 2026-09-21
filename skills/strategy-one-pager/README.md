@@ -1,4 +1,4 @@
-# strategy-to-one-pager
+# strategy-one-pager
 
 An [Agent Skill](https://code.claude.com/docs/en/skills) that reads the decks, memos and plans
 you already have and writes a company one-pager plus a linked one-pager for every team — each one

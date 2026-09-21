@@ -1,80 +1,115 @@
-# strategy-to-one-pager
+<p align="center">
+  <img src="docs/hero.png" alt="A company Strategy One-Pager next to its Strategy Gap Report, rendered by the skill" width="800">
+</p>
 
-A plugin bundling the **strategy-to-one-pager** Agent Skill. It reads the decks, memos and plans
-you already have and writes a company one-pager plus a linked one-pager for every team — each one
-provably derived from the company's, and checked against the Alaigned methodology. The result
-renders as HTML, PDF or Word.
+# Strategy One-Pager
+
+**Turn the strategy documents you already have into one aligned Strategy One-Pager per team.**
+
+An Agent Skill for Claude Code, the Claude app, Codex and ChatGPT. It reads your decks, memos and
+plans, writes a company Strategy One-Pager plus a linked one for every team, and checks the result
+against the Alaigned methodology. Every team page provably derives from the company page. Free, no
+sign-up, runs inside your own AI tool.
+
+[![Version](https://img.shields.io/badge/version-0.15.0-118E64)](https://github.com/alaigned/strategy-one-pager/releases)
+[![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/license-PolyForm%20Shield%201.0.0-7A76BE)](LICENSE)
+[![Works with](https://img.shields.io/badge/works%20with-Claude%20Code%20%7C%20Claude%20app%20%7C%20Codex%20%7C%20ChatGPT%20Business-333)](#install)
+
+Learn more at [alaigned.com/strategy-one-pager-skill](https://alaigned.com/strategy-one-pager-skill).
+
+## What you get
+
+- **A printable PDF.** One A4 page per Strategy One-Pager: the company page first, then one page
+  per team. It ends with a **Strategy Gap Report**: everything your documents did not say, written
+  as questions for your leadership team. Gaps are a feature, not a failure.
+- **A validated cascade bundle (JSON).** The source of truth behind the PDF, checked against the
+  same methodology schema the Alaigned product enforces. Import-ready.
+- **Open questions.** Where the sources are silent, the skill marks a proposal or leaves a gap. It
+  never invents a number, a date or a priority.
 
 ## Install
 
-This repository is also a marketplace, so Claude Code can install the plugin from it directly:
-
-```
-/plugin marketplace add alaigned/strategy-to-one-pager
-/plugin install alaigned-strategy@alaigned
-```
-
-## Layout
-
-| Path | What it is |
+| Tool | How |
 |---|---|
-| `.claude-plugin/plugin.json` | The plugin manifest |
-| `.claude-plugin/marketplace.json` | The marketplace manifest, listing this one plugin |
-| `skills/strategy-to-one-pager/` | The skill — instructions, references, templates, and the validator and renderer scripts |
-| `examples/` | Three synthetic strategy documents to try the skill on, and a note on what each one exercises |
-| `LICENSE` | The PolyForm Shield License 1.0.0, plus the notices it requires you to pass on |
+| **Claude Code** | `/plugin marketplace add alaigned/strategy-one-pager` then `/plugin install alaigned-strategy@alaigned` |
+| **Claude app** (claude.ai) | Download the [skill zip](https://try.alaigned.com/skill/download), add it once under Customize → Skills. [Step-by-step guide](https://try.alaigned.com/skill/guide) |
+| **Codex** | Paste the install prompt from [try.alaigned.com/skill](https://try.alaigned.com/skill); the skill lives on your machine from then on |
+| **ChatGPT** (Business, Enterprise, Edu) | Download the [skill zip](https://try.alaigned.com/skill/download), drop it into the chat and ask it to unpack and run the skill |
+| **Any agent that reads SKILL.md** | `npx skills add alaigned/strategy-one-pager` |
 
-`skills/strategy-to-one-pager/README.md` is the skill's own documentation: what it produces, what
-it needs installed, worked examples and troubleshooting.
+Pick **Opus** when you can choose the model. Smaller models produce noticeably weaker
+Strategy One-Pagers. Free plans of ChatGPT and Claude do not run this skill: it needs code
+execution to validate and render its output.
 
-## Try it without a strategy document of your own
+## What it does not do
 
-`examples/` holds three source documents for three fictional companies, deliberately different
-shapes — a complete strategy brief, a founder's note with no numbers, and a memo full of unresolved
-options. Attach one and ask for a cascade; `examples/README.md` says what each should produce.
+- It does not write a strategy you do not have. Thin sources produce a short page and a long Gap
+  Report; no sources produce a request for documents.
+- It does not decide for you. Competing options in your documents stay open questions.
+- It does not keep itself up to date. The output is a snapshot. Keeping the cascade live and
+  maintained as the strategy moves is what [Alaigned](https://alaigned.com/strategy-one-pager-skill)
+  does; every rendered page carries a link there.
+
+## Privacy
+
+The skill runs entirely inside your AI tool's session. It reads what you attach, drafts the
+cascade, and runs its validator and renderer locally. Nothing you attach is uploaded to Alaigned
+and no Alaigned server is called. The only outward step it can take is a public-data search about
+your company, and it asks you before doing that.
+
+## Requirements
+
+Any `python3` 3.10 or newer with code execution and file creation available to the assistant.
+Both scripts are standard-library only: nothing to install, no network. The PDF renderer uses
+headless Chromium when present, otherwise WeasyPrint, otherwise its own built-in writer, so a PDF
+comes out of every environment. Full details and troubleshooting in
+[`skills/strategy-one-pager/README.md`](skills/strategy-one-pager/README.md).
+
+## Versions
+
+Each release is one tagged commit (`v<version>`) matching the `version` in the skill's frontmatter.
+Release notes are on the [Releases page](https://github.com/alaigned/strategy-one-pager/releases)
+and in [`CHANGELOG.md`](CHANGELOG.md). Every generated bundle embeds the fingerprint of the
+methodology schema it was validated against, so downstream imports can check compatibility.
+
+## About Alaigned
+
+Alaigned is the Strategy Operating System for Definition, Alignment and Evaluation. One Strategy
+One-Pager for the company, one for every team, each derived from the one above it, so the strategy
+travels down intact and every leader sees how their work connects to it. It is built on a
+methodology proven in more than 100 organizations; leaders at Raiffeisenbank, České dráhy and CME
+already run strategy this way. This skill puts the methodology's first step, the cascade itself,
+into your own AI tool. [alaigned.com](https://alaigned.com)
 
 ## Support
 
-Questions and bug reports: email **support@alaigned.com**.
-
-## This tree is generated
-
-It is built and published from Alaigned's development repository, so editing files here has no
-effect beyond the next release, which overwrites them. Each release is a single commit tagged
-`v<version>`, matching the `version` in the skill's frontmatter; the commit message also records
-the fingerprint of the methodology schema that release validates against.
-
-Issues and questions are welcome on this repository.
+- Bugs and failed runs: [open an issue](https://github.com/alaigned/strategy-one-pager/issues/new/choose)
+- Questions and showing what you built: [Discussions](https://github.com/alaigned/strategy-one-pager/discussions)
+- Email: **support@alaigned.com**
 
 ## License
 
-Everything in this repository — the skill instructions, the methodology references and the inlined
-methodology schema, the templates, and the Python validator and renderer — is licensed under the
-**[PolyForm Shield License 1.0.0](LICENSE)**, and nothing here is under any other terms. It is a
-source-available licence, not an open-source one: it grants broad rights for every purpose except
-competing with us.
+Everything here is licensed under the **[PolyForm Shield License 1.0.0](LICENSE)**. Source-available,
+not open source.
 
-You may:
+You may use it, including commercially, change it, and pass copies on with these terms and the
+`Required Notice:` lines attached. You may not use it to provide a product that competes with this
+software or with Alaigned, sublicense it, or use the Alaigned name or wordmark; a changed copy you
+distribute must remove or replace the wordmark the renderer embeds. [LICENSE](LICENSE) holds the
+terms that bind; this summary does not replace them.
 
-- **use it, including commercially** — inside a company, for clients, for paid work, at any scale;
-- **change it** and build new works on it;
-- **pass copies on**, changed or not — to a colleague, a friend, another company — provided
-  whoever gets a copy also gets these terms (or the URL at the top of [LICENSE](LICENSE)) and the
-  `Required Notice:` lines that come with them.
+The output is a draft for your leadership team to confirm, not professional advice.
 
-You may not:
+## For contributors and the curious
 
-- **use it to provide a product that competes** with this software, or with any product Alaigned
-  provides using it. The licence reads "competes" broadly: a different interface, a different
-  platform, or giving it away free does not stop something from competing;
-- **sublicense it or transfer your licence** to someone else. Everyone gets their own licence
-  from Alaigned, on these same terms;
-- **use the Alaigned name or wordmark.** No trademark rights are granted here. The renderer
-  embeds the Alaigned wordmark in the HTML, PDF and Word artifacts it produces — a changed copy
-  you distribute must remove or replace it.
+This tree is generated from Alaigned's development repository. Each release overwrites it, so
+pull requests against these files cannot be merged; issues and discussions are the way in, and a
+report from a real run is the most useful thing you can send. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Read [LICENSE](LICENSE) for the terms that actually bind; the summary above is not a substitute
-for them.
-
-The development repository this tree is generated from is not public and is separately licensed;
-that licence does not apply to anything in this repository.
+| Path | What it is |
+|---|---|
+| `.claude-plugin/` | Plugin and marketplace manifests |
+| `skills/strategy-one-pager/` | The skill: `SKILL.md`, references, templates, the validator and renderer, the inlined methodology schema |
+| `docs/` | Images used by this README |
+| `examples/` | Three synthetic strategy documents to try the skill on, and a note on what each one exercises |
+| `LICENSE` | PolyForm Shield 1.0.0 with the notices it requires you to pass on |

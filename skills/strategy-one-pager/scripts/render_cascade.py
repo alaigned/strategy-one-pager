@@ -183,7 +183,7 @@ STRINGS = {
             "In Alaigned, this document carries your logo and your brand colors — the preview "
             "above wears ours."
         ),
-        "doc_title": "%s — Strategy One-Pager Cascade",
+        "doc_title": "%s — Strategy One-Pager",
     },
     "cs": {
         "lang": "cs",
@@ -650,32 +650,148 @@ def core_rows_html(content, gaps, page_title):
     return '<section class="core">%s</section>' % "".join(rows)
 
 
-def est_lines_n(nchars, chars_per_line):
-    return max(1, -(-nchars // chars_per_line))
+# Glyphs a proportional face sets wider than its own average character, in
+# units of that average: capitals and digits (the artifact's faces draw both on
+# the cap-height body) and the two widest lowercase letters. Nothing is ever
+# weighted *below* 1.0 — narrow glyphs are not discounted, because the budgets
+# these weights feed are calibrated on mixed-case prose and must keep erring
+# tall. Measured 2026-09-14 in Chromium (A4 landscape): an ALL-CAPS 140-char
+# core value takes two lines where the same text in mixed case takes one.
+WIDE_GLYPHS = "mwMW"
+WIDE_GLYPH_WEIGHT = 1.3
 
 
-def entity_text_len(entity):
-    """Total visible characters of an entity's own labeled rows — the basis
-    for its height estimate. A null value may still render (the mandatory-
-    field gap line), so it counts as a short line rather than zero."""
-    total = 0
+def glyph_weight(text):
+    """A text run's width in average-character units — the unit every
+    `*_CHARS` budget in this file is expressed in."""
+    return sum(
+        WIDE_GLYPH_WEIGHT if (ch.isupper() or ch.isdigit() or ch in WIDE_GLYPHS) else 1.0
+        for ch in text
+    )
+
+
+def est_lines(text, chars_per_line):
+    """Lines a text run takes in a column `chars_per_line` average characters
+    wide, wrapped the way a browser wraps it: greedily, at word boundaries. A
+    word that does not fit what is left of the line starts a new one, and a
+    word wider than the whole line breaks inside itself.
+
+    Counting `len(text) // chars_per_line` instead — what 0.13.2 did — is short
+    on exactly the inputs that overflow a sheet: word wrapping wastes the ragged
+    right edge (a column of 28-character compounds loses a third of every line),
+    and a character budget calibrated on mixed-case prose is a third too
+    generous for ALL-CAPS. Both were real: a five-row ALL-CAPS core strip and a
+    pillar band of long compound names each estimated one sheet and printed
+    two."""
+    budget = max(1.0, float(chars_per_line))
+    lines, used = 1, 0.0
+    for word in (text or "").split():
+        weight = glyph_weight(word)
+        if used == 0.0:
+            used = weight
+        elif used + 1.0 + weight <= budget:  # the space, then the word
+            used += 1.0 + weight
+        else:
+            lines += 1
+            used = weight
+        while used > budget:
+            lines += 1
+            used -= budget
+    return lines
+
+
+def printed_text(text):
+    """The text the page actually sets for a textValue: `value_html` strips the
+    `[PROPOSED …]` marker before printing, so an estimate that measures the raw
+    string charges lines for text no reader ever sees. The five-pillar beta
+    cascade carries `[PROPOSED — one of three options under discussion in the
+    source; this draft uses Option 1] We exist to help people become parents.`
+    — 130 characters raw against 39 printed, which at the 26-character pillar
+    column is six estimated lines against two, on every page that repeats the
+    statement."""
+    return split_proposed(text or "")[0]
+
+
+def value_est_text(node):
+    """The text a value node contributes to a height estimate: what the page
+    prints, or — when the page prints the "not found in your sources" gap line
+    instead — that line padded out to NULL_VALUE_CHARS, so a longer translation
+    of it still estimates tall. Callers must already have decided that the row
+    prints at all; a null *optional* value renders nothing and costs nothing."""
+    text = printed_text(node.get("textValue"))
+    return text or S["gap_missing"].ljust(NULL_VALUE_CHARS, "x")
+
+
+def row_est_mm(text, row_chars):
+    """One `.row` block — a labeled value inside a pillar or an initiative.
+    `text` is the whole printed run, label included: `.row-label` and
+    `.row-value` are inline spans, so they wrap as one. The 1mm covers the
+    row's own 0.6mm vertical margin (adjacent rows collapse to one) and rounds
+    the measured 4.05mm line up to PILLAR_ROW_LINE_MM."""
+    return 1 + PILLAR_ROW_LINE_MM * est_lines(text, row_chars)
+
+
+def row_est_text(label, node):
+    """The run a `.row` sets: its uppercased label, a space, then the value.
+    The label is uppercase on the page, so it is uppercase here too — the
+    glyph weighting is the whole point of measuring the printed form."""
+    return "%s %s" % (label.upper(), value_est_text(node))
+
+
+def item_est_mm(item, item_chars):
+    """One initiative `<li>`: its semibold name, then its own body — both
+    wrapped at the item width, because a goal row nested inside the list is
+    indented with it. Chromium measures the box at
+    `4.445 × name_lines + Σ(4.05 × row_lines + 0.6)` plus the list item's 1mm
+    bottom margin — which is what the three terms below round up."""
+    name = item.get("name") or {}
+    title = printed_text(name.get("textValue"))
+    return (
+        1
+        + PILLAR_LINE_MM * est_lines(title, item_chars)
+        + entity_body_mm(item, item_chars, item_chars)
+    )
+
+
+def entity_body_mm(entity, item_chars, row_chars):
+    """Everything inside an entity except its own name, estimated block by
+    block: each labeled row and each nested item rounds its own lines up, so a
+    two-line goal under a three-line name costs two roundings rather than one
+    merged character run. Rows sit at `row_chars`, nested list items (and
+    everything inside them) at the narrower `item_chars`.
+
+    Four corrections over the 0.13.2 estimate, each worth whole sheets on a
+    real cascade: the label counted is the one the page prints (`GOAL`, 4
+    chars) and not the bundle's own (`Goal (picture of success)`, 25) — at 25
+    characters per line that phantom line cost 4.4mm per initiative, 35mm on an
+    eight-initiative band; name and rows round separately instead of merging
+    into one character run; a pillar's own rows wrap at the full cell width
+    rather than the list's; and a row the page does not print costs nothing."""
+    total = 0.0
     for key, node in entity.items():
         if key in ("label", "metadata", "name"):
             continue
         if is_text_node(node):
-            value_chars = len(node.get("textValue") or "") or NULL_VALUE_CHARS
-            total += len(node.get("label") or key) + value_chars
+            if node.get("textValue") is None and not node.get("mandatory"):
+                # `value_html` prints nothing at all for a null optional value
+                # — no hollow row, so no height. A null *mandatory* one does
+                # print, as the "not found in your sources" gap line, which is
+                # what NULL_VALUE_CHARS measures.
+                continue
+            label = display_label(node.get("label") or key)
+            total += row_est_mm(row_est_text(label, node), row_chars)
         elif is_collection(node):
             for item in node["content"]:
-                name = item.get("name") or {}
-                total += len(name.get("textValue") or "") + entity_text_len(item)
+                total += item_est_mm(item, item_chars)
     return total
 
 
-def entity_body_parts(entity, gaps, page_title, chars_per_line):
+def entity_body_parts(entity, gaps, page_title, item_chars, row_chars):
     """The entity's body as (kind, group, html, mm) blocks in template order —
     the unit the pillar paginator cuts at. Built exactly once per render so
-    the gap collection sees each missing value once."""
+    the gap collection sees each missing value once. `item_chars` is the
+    initiative-list width, `row_chars` the wider one the entity's own rows sit
+    at."""
     parts = []
     for index, (key, node) in enumerate(entity.items()):
         if key in ("label", "metadata", "name"):
@@ -683,15 +799,19 @@ def entity_body_parts(entity, gaps, page_title, chars_per_line):
         if is_text_node(node):
             body = value_html(node, gaps, page_title)
             if body:
+                # `body` is truthy for a null *mandatory* value too — the page
+                # prints its "not found in your sources" gap line — so the
+                # estimate goes through `row_est_text`, which applies the same
+                # NULL_VALUE_CHARS floor `entity_body_mm` and `core_est_mm` do.
+                # A null optional value renders nothing and never gets here.
                 label = display_label(node.get("label", key))
-                nchars = len(label) + len(node.get("textValue") or "")
                 parts.append(
                     (
                         "row",
                         index,
                         '<div class="row"><span class="row-label">%s</span><span class="row-value">%s</span></div>'
                         % (esc(label.upper()), body),
-                        1 + PILLAR_LINE_MM * est_lines_n(nchars, chars_per_line),
+                        row_est_mm(row_est_text(label, node), row_chars),
                     )
                 )
         elif is_collection(node):
@@ -702,14 +822,13 @@ def entity_body_parts(entity, gaps, page_title, chars_per_line):
                     if is_text_node(name) and name.get("textValue")
                     else ""
                 )
-                nchars = len(title) + entity_text_len(item)
                 parts.append(
                     (
                         "init",
                         index,
                         '<li><span class="init-name">%s</span>%s</li>'
                         % (title, entity_body_html(item, gaps, page_title)),
-                        1 + PILLAR_LINE_MM * est_lines_n(nchars, chars_per_line),
+                        item_est_mm(item, item_chars),
                     )
                 )
     return parts
@@ -738,8 +857,9 @@ def assemble_parts(parts):
 
 def entity_body_html(entity, gaps, page_title):
     """Everything inside a pillar/initiative except its name: labeled rows +
-    nested collections, in template order."""
-    return assemble_parts(entity_body_parts(entity, gaps, page_title, 999))
+    nested collections, in template order. Markup only — the caller that needs
+    the height asks `entity_body_mm`, so the wrap widths here are irrelevant."""
+    return assemble_parts(entity_body_parts(entity, gaps, page_title, 999, 999))
 
 
 # Column count mirroring the product template's grid_columns/1: up to six
@@ -759,63 +879,134 @@ def grid_columns(count):
 # does too; heights are conservative mm estimates in the same spirit as the
 # gap-report budgets. The paginator engages only when a page's estimate
 # clearly exceeds one sheet — ordinary bundles render exactly as before.
-PILLAR_LINE_MM = 4.4
-# Estimates deliberately run ~15-20% above real heights (they must err tall),
-# so the engage threshold lives in estimate-space: est 220 ≈ a real ~185mm
-# page, right at the sheet boundary. Ordinary pages stay on the single-sheet
-# path and render exactly as before. The per-sheet budget the paginator packs
-# against lives in the same space — budgeting real millimetres against tall
-# estimates paid the bias twice and left sheets two thirds full;
-# Chromium measured the packed sheets at 120 of 181 usable mm. The budget sits
-# a little under the threshold: a sheet packed to 220 with the least-biased
-# blocks (long initiative goals estimate only ~20% tall) measured 4mm over.
-OP_ENGAGE_MM = 220
-OP_SHEET_EST_MM = 215
-OP_HEADER_MM = 36  # measured 31.3mm plus its 4mm margin; budgeted tall
+#
+# Every number below was re-measured on 2026-09-14 in Chromium (A4 landscape,
+# the print CSS below) against two real cascades (a 4-column and a 5-column L0,
+# ten team pages, 57 initiatives and 33 labeled rows). Each measured figure
+# keeps that date so the next calibration knows what to re-run: render the
+# bundle, serve the HTML over `python3 -m http.server`, and read
+# `getBoundingClientRect()` in millimetres (1mm = 96/25.4 px) per `.page-body`
+# child; the usable body is 181mm (193mm box less its 8 + 4mm padding).
+# An initiative line: 9pt at 1.4 measures 4.445mm (2026-09-14 — a seven-line
+# item measured 32.11mm including its 1mm bottom margin against 31.8 estimated
+# at 4.4, so the constant now carries the full measured line).
+PILLAR_LINE_MM = 4.45
+# A `.row` line: 8.5pt at 1.35 measures 4.05mm, budgeted 1% tall. Rows sit one
+# size below the initiative name they hang under, so they get their own line
+# constant instead of borrowing the list's — a five-line success row estimated
+# at the list line ran 1.75mm tall (5 × 0.35), about 9% of that row's 20.25mm.
+PILLAR_ROW_LINE_MM = 4.1
+# Estimates deliberately run above real heights (they must err tall), so the
+# engage threshold lives in estimate-space. At 0.13.2 the bias was 1.18-1.40x
+# and the threshold sat at 220, which let a page measuring ~186mm stay on the
+# single-sheet path; the corrections here (printed text and labels, per-block
+# rounding, re-measured wrap widths, the two-column core model) cut the bias,
+# and the weighted word-wrap count (`est_lines`) put part of it back where it
+# belongs — on ALL-CAPS and long-token text, which used to estimate short.
+#
+# Chromium 2026-09-14, the eleven single-sheet pages of those two cascades:
+# measured 125.2-173.1mm, estimated 144.5-205.3 — 1.108x to 1.223x, or +15.2 to
+# +32.3mm in absolute terms. 206 is the tightest threshold that still keeps
+# every one of them on one sheet (the binding page is a 173.1mm four-column L0
+# estimating 205.3; at 205 it paginates into two sheets no reader needs). The
+# floor of that bias band is what makes the threshold safe upward: a page
+# measuring 191mm estimates 211.6 at the measured ratio floor, and 206.2 even
+# at the absolute floor, so it paginates either way. A page measuring a full
+# 181mm estimates 200.6-221.3 across the same band — it stays single only at
+# the low end of the band, and paginates above ~1.14x. That asymmetry is the
+# safe one: an unnecessary second sheet costs a reader nothing, a browser
+# cutting a sheet in half costs the artifact its design.
+OP_ENGAGE_MM = 206
+# The per-sheet budget the paginator packs against lives in the same space —
+# budgeting real millimetres against tall estimates paid the bias twice and
+# left sheets two thirds full (Chromium measured 120 of 181 usable mm). It
+# sits under the threshold, because a packed sheet has no page-level slack
+# left: the paginator stops one block short of the budget, so the sheet's real
+# height tracks the *per-block* bias floor (~1.03), not the page-level one. At
+# 190, the five-pillar L0's header (56.8 estimated) leaves 133.2 for the band,
+# which measured 115.9 on the fullest packed sheet — 169.8mm of 181 used
+# (2026-09-14).
+OP_SHEET_EST_MM = 190
+# The header without its ambition: kicker 5.1 + h1 8.5 + 2mm + 5mm padding +
+# 0.4mm rule = 21.0mm box, plus its 4mm margin — 25.0mm measured, budgeted 26,
+# tall by 1. The ambition is added per line below — 0.13.2 folded one ambition
+# line into this constant and then added `lines(ambition)` on top, charging the
+# first line twice.
+OP_HEADER_MM = 26
+OP_TITLE_LINE_MM = 9  # each h1 line past the first: 22pt at 1.1 measures 8.5mm
+OP_TITLE_CHARS = 55  # the ~223mm h1 column beside the logo holds 62 at 22pt
+# The ambition is 10pt in a 200mm column: line 5.1mm, and a 309-character
+# ambition measured three lines (≈103 characters each).
+OP_AMBITION_LINE_MM = 5.2
+OP_AMBITION_CHARS = 100
 OP_BAND_OVERHEAD_MM = 8  # band-label padding, body padding, list margin, band margin
-OP_BANNER_MM = 10  # the draft banner box (6.5mm) plus its margin, when shown
-# A chip line: 9pt at line-height 1.45 (4.6mm) plus the chip's 2.4mm of
-# padding and the 2mm flex gap to the next line. Chips wrap (`.chips` is
-# flex-wrap), so a band is as tall as its wrapped lines, not its collections:
-# counting collections took a seven-value band for 9mm, the page stayed on the
-# single-sheet path and the browser cut it. Glyphs run ~1.7mm at 9pt
-# like the pillar body; budgeted at 1.9 so greedy wrapping's ragged right
-# edge still estimates tall.
-OP_CHIP_LINE_MM = 9
+OP_BANNER_MM = 10  # the draft banner box (6.5mm) plus its 3mm margin, when shown
+# Chips wrap (`.chips` is flex-wrap), so a band is as tall as its wrapped
+# lines, not its collections: counting collections took a seven-value band for
+# 9mm, the page stayed on the single-sheet path and the browser cut it. The
+# first wrapped line of a row measures 7.3mm (the chip box: 9pt at 1.45 plus
+# 1.2mm of padding above and below) and each further line adds 9.23mm (the
+# same box plus the 2mm flex gap) — one flat per-line constant charged the
+# first line as if it had a gap above it. Glyphs run ~1.55mm at 9pt; budgeted
+# at 1.9 so greedy wrapping's ragged right edge still estimates tall.
+OP_CHIP_LINE1_MM = 7.5
+OP_CHIP_LINE_MM = 9.3
 OP_CHIP_CHAR_MM = 1.9
 OP_CHIP_PAD_MM = 8  # 3mm padding each side plus the 2mm gap to the next chip
 OP_CHIP_ROW_WIDTH_MM = 234  # the 1fr track beside the 36mm label and 3mm gap
 NULL_VALUE_CHARS = 30  # a rendered "Not found in your sources" gap line
 
 
-def pillar_chars_per_line(cols):
-    # 234mm grid minus gaps, cell padding, list indent and bullet markers;
-    # ~1.7mm per character at the 9pt body size
-    cell_mm = (234 - 3 * (cols - 1)) / cols - 13
-    return max(12, int(cell_mm / 1.7))
+def pillar_cell_mm(cols):
+    """One pillar column's width: the 234mm grid track less the 3mm gaps."""
+    return (234 - 3 * (cols - 1)) / cols
+
+
+def pillar_item_chars(cols):
+    # An initiative name's line (and every row nested inside the list item):
+    # the cell less its 2.5mm side padding, the 4mm list indent and the bullet
+    # — 9mm all told. The divisor is not the glyph width (a 9pt character runs
+    # ~1.55mm) but the width a line actually *uses*: narrow columns waste a
+    # whole word on every line, so the effective cost per character climbs as
+    # the column shrinks. Measured 2026-09-14 at 1.56mm per character across
+    # four columns and 1.79mm across five, budgeted 1.9 so both stay tall — the
+    # binding samples are a 91-character name over four lines at four columns
+    # (30 characters per line) and a 119-character one over seven lines at five
+    # (19). `est_lines` now models the wasted right edge itself, so this budget
+    # keeps its margin instead of spending it on word wrapping.
+    return max(10, int((pillar_cell_mm(cols) - 9) / 1.9))
+
+
+def pillar_row_chars(cols):
+    # A `.row` line: the same cell less its side padding only — rows are not
+    # list items, so they keep the indent an initiative name gives up, and they
+    # set one size smaller. Measured 2026-09-14, binding samples: 131 characters
+    # over five lines at four columns (32 per line), 105 over six at five
+    # columns (20).
+    return max(12, int((pillar_cell_mm(cols) - 5) / 1.9))
 
 
 def pillar_name_chars(cols):
     # the name bar is bold 11pt — noticeably fewer characters per line. Measured
-    # in Chromium at four columns: 24 characters fit one line of the 51mm bar,
-    # 46 take two, 52 take three — ~2.05mm per glyph, budgeted 2.1.
-    cell_mm = (234 - 3 * (cols - 1)) / cols - 5
-    return max(10, int(cell_mm / 2.1))
+    # 2026-09-14 in Chromium at four columns: 24 characters fit one line of the
+    # 51mm bar, 46 take two, 52 take three — ~2.05mm per glyph, budgeted 2.1.
+    return max(10, int((pillar_cell_mm(cols) - 5) / 2.1))
 
 
 def pillar_cells(pillars, gaps, page_title):
     """Each pillar as (name_bar_html, [body blocks], name_bar_mm)."""
     cols = grid_columns(len(pillars["content"]))
-    chars = pillar_chars_per_line(cols)
+    item_chars = pillar_item_chars(cols)
+    row_chars = pillar_row_chars(cols)
     cells = []
     for pillar in pillars["content"]:
         name = pillar.get("name", {})
-        title = esc(split_proposed(name.get("textValue") or "")[0])
-        parts = entity_body_parts(pillar, gaps, page_title, chars)
-        # measured 10.4 / 16.0 / 21.7mm for one / two / three lines: 4.75 + 5.65
-        # per line, budgeted 5 + 5.8 so the bar never estimates short
-        name_mm = 5 + 5.8 * est_lines_n(max(len(title), 1), pillar_name_chars(cols))
-        cells.append((title, parts, name_mm))
+        title = printed_text(name.get("textValue"))
+        parts = entity_body_parts(pillar, gaps, page_title, item_chars, row_chars)
+        # measured 10.4 / 16.0 / 21.7mm for one / two / three lines (2026-09-14):
+        # 4.75 + 5.65 per line, budgeted 5 + 5.8 so the bar never estimates short
+        name_mm = 5 + 5.8 * est_lines(title, pillar_name_chars(cols))
+        cells.append((esc(title), parts, name_mm))
     return cols, cells
 
 
@@ -853,8 +1044,11 @@ def pillar_band_chunks(pillars, cols, cells, budgets):
     column, not their sum. Within a group all columns advance in parallel
     against the same mm budget (grid geometry identical on every sheet);
     spent columns keep an empty cell to hold their grid track, and each
-    column reserves its own repeated name bar's estimated height. Yields one
-    band-HTML per sheet; `budgets` yields each sheet's body budget."""
+    column reserves its own repeated name bar's estimated height. Yields
+    `(band_html, used_mm)` per sheet — the band's own estimated height, which
+    is the tallest column's, so the caller can tell whether anything else
+    (today: the chip band) still fits beside it; `budgets` yields each sheet's
+    body budget."""
     label = display_label(pillars.get("label", "Pillars"))
     first = True
     for row_start in range(0, len(cells), cols):
@@ -865,6 +1059,7 @@ def pillar_band_chunks(pillars, cols, cells, budgets):
         while any(parts for _title, parts, _nm in group):
             budget = next(budgets)
             sheet_cells = []
+            sheet_used = 0.0
             for title, parts, name_mm in group:
                 if not parts:
                     sheet_cells.append('<article class="pillar"></article>')
@@ -876,10 +1071,11 @@ def pillar_band_chunks(pillars, cols, cells, budgets):
                     used += parts[0][3]
                     take.append(parts.pop(0))
                 sheet_cells.append(pillar_cell_html(title, take))
+                sheet_used = max(sheet_used, used)
             band = dict(pillars)
             if not first:
                 band["label"] = "%s — %s" % (label, S["gap_continued"])
-            yield pillar_band_html(band, cols, sheet_cells)
+            yield pillar_band_html(band, cols, sheet_cells), sheet_used
             first = False
 
 
@@ -895,15 +1091,32 @@ def chip_texts(collection):
 
 
 def chip_band_est_mm(collections):
-    """The chip band's height from its wrapped chip lines: each row is its
-    chips' widths packed into the 234mm track, one OP_CHIP_LINE_MM per line,
-    plus the row's 2mm margin; the band adds its 3mm padding and border."""
-    total = 4
+    """The chip band's height from its wrapped chip lines: `.chips` is a
+    flex-wrap row, so each chip goes on the current line if it still fits the
+    234mm track and starts a new one if it does not — greedily, chip by chip,
+    never packed. Dividing the summed widths by the track (what 0.13.2 did) is
+    bin-packing, and bin-packing is short by exactly the ragged right edge: four
+    150mm chips take four lines and estimated three. A chip wider than the whole
+    track wraps inside itself, which the `while` covers. A row costs
+    OP_CHIP_LINE1_MM for its first line, OP_CHIP_LINE_MM for each further one
+    (the extra is the 2mm flex gap), plus the row's own 2mm margin; the band
+    adds 3mm of padding and its 0.2mm border, budgeted 3.5 — tall by 0.3."""
+    total = 3.5
     for collection in collections:
-        widths = [len(t) * OP_CHIP_CHAR_MM + OP_CHIP_PAD_MM for t in chip_texts(collection)]
+        widths = [
+            glyph_weight(t) * OP_CHIP_CHAR_MM + OP_CHIP_PAD_MM for t in chip_texts(collection)
+        ]
         if widths:
-            lines = est_lines_n(int(sum(widths)), OP_CHIP_ROW_WIDTH_MM)
-            total += 2 + OP_CHIP_LINE_MM * lines
+            lines, used = 1, 0.0
+            for width in widths:
+                if used and used + width > OP_CHIP_ROW_WIDTH_MM:
+                    lines += 1
+                    used = 0.0
+                used += width
+                while used > OP_CHIP_ROW_WIDTH_MM:
+                    lines += 1
+                    used -= OP_CHIP_ROW_WIDTH_MM
+            total += 2 + OP_CHIP_LINE1_MM + OP_CHIP_LINE_MM * (lines - 1)
     return total
 
 
@@ -955,14 +1168,46 @@ OP_SHEET_TEMPLATE = """
 </section>"""
 
 
+# The core strip is a two-column grid, and a grid row is as tall as its taller
+# cell — so the label and the value are measured apart rather than merged into
+# one character run. Chromium 2026-09-14, both cascades: the 233mm value column
+# at 9.5pt held 136 characters of mixed-case prose on one line and broke a
+# 154-character one in two (a 460-character narrative took four), so the
+# measured samples cap the budget at 153; 140 is a deliberate margin below that
+# cap. The budget counts *weighted* characters (`est_lines`), so an ALL-CAPS
+# value spends it ~1.3x faster — which is why 140 no longer has to absorb the
+# caps case on its own. The 36mm label column at 8pt with 0.08em tracking held
+# `NARRATIVE` (9) on one line and broke `TEAM STRATEGIC AMBITION` (23) in two,
+# so its line holds at least `TEAM STRATEGIC` — fourteen characters. Merging
+# the two at 100 characters charged a two-line row for `MISSION` + a
+# 136-character mission — 4.6mm per page, every page.
+OP_CORE_LINE_MM = 4.6  # 9.5pt at 1.35 = 4.53mm
+OP_CORE_CHARS = 140
+# The label line: 8pt (10.667px) at the body's 1.45 line height is 4.09mm.
+# The constant stays 4.4 — tall by 0.3mm, and a label rarely takes two lines.
+OP_CORE_LABEL_LINE_MM = 4.4
+# 18, not the fourteen characters measured: this column is the one run on the
+# page that is *always* uppercase, so its budget has to be stated in the units
+# `est_lines` counts in, and fourteen capitals weigh 18.2. Left at 14 it
+# charged `TEAM STRATEGIC AMBITION` three lines where the page sets two —
+# 4.4mm on every team page, in a term that has no margin to give.
+OP_CORE_LABEL_CHARS = 18
+
+
 def core_est_mm(content):
     total = 8
     for key, node in content.items():
         if key in ("metadata", "companyAmbition") or not is_text_node(node):
             continue
-        value_chars = len(node.get("textValue") or "") or NULL_VALUE_CHARS
-        nchars = len(node.get("label") or key) + value_chars
-        total += 2 + PILLAR_LINE_MM * est_lines_n(nchars, 100)
+        if node.get("textValue") is None and not node.get("mandatory"):
+            # core_rows_html drops the row entirely rather than print a hollow
+            # one — the estimate has to drop it too
+            continue
+        label = display_label(node.get("label") or key)
+        total += 2 + max(
+            OP_CORE_LINE_MM * est_lines(value_est_text(node), OP_CORE_CHARS),
+            OP_CORE_LABEL_LINE_MM * est_lines(label.upper(), OP_CORE_LABEL_CHARS),
+        )
     return total
 
 
@@ -978,7 +1223,7 @@ def one_pager_html(one_pager, by_ref, bundle, gaps, banner_text):
     ambition_html = (
         value_html(ambition, gaps, title, css="ambition") if is_text_node(ambition) else ""
     )
-    ambition_text = ambition.get("textValue") or "" if is_text_node(ambition) else ""
+    ambition_text = value_est_text(ambition) if is_text_node(ambition) else ""
 
     collections = [v for v in content.values() if is_collection(v)]
     pillar_like = [c for c in collections if c["content"] and "name" in c["content"][0]]
@@ -993,18 +1238,25 @@ def one_pager_html(one_pager, by_ref, bundle, gaps, banner_text):
     footer = footer_html(generated_at)
     banner = '<p class="draft-banner">%s</p>' % esc(banner_text) if banner_text else ""
 
+    # OP_HEADER_MM holds the header with no ambition at all, so the ambition
+    # is charged once, here, and only for the lines it actually takes.
     header_mm = (
         OP_HEADER_MM
-        + 9 * (est_lines_n(len(title), 38) - 1)
-        + PILLAR_LINE_MM * est_lines_n(len(ambition_text), 95)
+        + OP_TITLE_LINE_MM * (est_lines(title, OP_TITLE_CHARS) - 1)
+        + (
+            OP_AMBITION_LINE_MM * est_lines(ambition_text, OP_AMBITION_CHARS)
+            if ambition_html
+            else 0
+        )
         + (OP_BANNER_MM if banner_text else 0)
     )
     core_mm = core_est_mm(content)
+    chip_mm = chip_band_est_mm(chip_like) if chips else 0
     est_total = (
         header_mm
         + core_mm
         + sum(band_est_mm(cols, cells) for _c, cols, cells in bands)
-        + (chip_band_est_mm(chip_like) if chips else 0)
+        + chip_mm
     )
 
     def sheet(body, continued):
@@ -1035,7 +1287,7 @@ def one_pager_html(one_pager, by_ref, bundle, gaps, banner_text):
         return sheet(body, False)
 
     def budget_gen():
-        # estimate-space, like every term subtracted from it; the ~15-20% the
+        # estimate-space, like every term subtracted from it; the ~10-15% the
         # estimates run tall is the slack that keeps a small miss from spilling
         yield max(50, OP_SHEET_EST_MM - header_mm - core_mm)
         while True:
@@ -1049,8 +1301,19 @@ def one_pager_html(one_pager, by_ref, bundle, gaps, banner_text):
     ]
     if not chunks:
         return sheet(core + chips, False)
-    sheets = [sheet(core + chunks[0], False)]
-    sheets += [sheet(chunk, True) for chunk in chunks[1:]]
+
+    bodies = [core + chunks[0][0]] + [band for band, _used in chunks[1:]]
+    # The chip band rides the last pillar sheet whenever that sheet has room
+    # for it — the paginator cuts by grid row group, so the last sheet is
+    # routinely half empty and a chip band alone on a closing sheet is the
+    # emptiest page the artifact can produce. Only the sheet the chips would
+    # join is measured: the first sheet also carries the core strip.
+    last_sheet_mm = header_mm + chunks[-1][1] + (core_mm if len(chunks) == 1 else 0)
+    if chips and last_sheet_mm + chip_mm <= OP_SHEET_EST_MM:
+        bodies[-1] += chips
+        chips = ""
+    sheets = [sheet(bodies[0], False)]
+    sheets += [sheet(body, True) for body in bodies[1:]]
     if chips:
         sheets.append(sheet(chips, True))
     return "".join(sheets)
@@ -1066,30 +1329,67 @@ def one_pager_html(one_pager, by_ref, bundle, gaps, banner_text):
 # vertical padding.
 #
 # The constants below are measured in the browser against the rendered page,
-# not guessed: a sheet packed to the estimated brim must still print as ONE
-# sheet. Until the Proposed-content section arrived no sheet ever filled its
-# budget, which hid ~13mm of accumulated optimism here and the first full
-# sheet promptly spilled onto a second page. What the measurements say: the
-# body is 183mm, budgeted 176 once the list's own 6mm bottom margin is
-# reserved; the stats strip is 32mm, budgeted 33 to err tall.
-GAP_SHEET_MM = 176
-GAP_HEADER_MM = 30  # header box + its 4mm margin
-GAP_STATS_MM = 33  # stats strip + its 6mm margin
-GAP_CTA_MM = 46
-GAP_LINE_MM = 5.4  # a 10.5pt line at line-height 1.45
+# not guessed. Until the Proposed-content section arrived no sheet ever filled
+# its budget, which hid ~13mm of accumulated optimism here and the first full
+# sheet promptly spilled onto a second page. What the measurements say
+# (2026-09-14, Chromium, A4 landscape): the page body is 181.2mm of usable
+# height, a sheet's header measures 30.1mm with its margin (budgeted 30) and
+# the stats strip 31.9mm (budgeted 33, tall by 1.1).
+#
+# 176 -> 178 is a deliberate trade, measured both ways on the two beta
+# cascades. At 176 each of them closed with the CTA hero alone on an otherwise
+# empty sheet (the 15-question cascade ran to nine gap sheets, the 10-question
+# one to six, each ending on a 78mm sheet holding nothing but the hero); at 178
+# the hero joins the last content sheet, the reports close at eight and five
+# gap sheets, and the tallest gap sheet measures 167.2 and 169.6mm of 181.2.
+#
+# What 178 costs, and why GAP_LINE_MM pays for it: 178 sits above the
+# *geometric* ceiling, which is 181.2 less the 30mm header and the list's own
+# 6mm bottom margin — 145mm of items, a GAP_SHEET_MM of about 175. The gap
+# estimate errs tall in its line *count* (GAP_CHARS_PER_LINE runs ~10% under
+# the measured wrap), but at 5.4mm a line it erred tall by almost nothing in
+# millimetres once a count was fixed, so a report whose questions all sit
+# exactly on a line boundary packed one item too many onto every sheet: 26
+# uniform four-line questions measured 183mm and Chromium cut four sheets in
+# half. GAP_LINE_MM 5.45 restores the margin exactly where it was missing (see
+# below) — measured again after the change, the same report packs five items a
+# sheet and measures 158.9mm, while the two beta cascades pack identically to
+# before at 167.2 and 169.6mm.
+GAP_SHEET_MM = 178
+GAP_HEADER_MM = 30  # header box + its 4mm margin: 30.1 measured, budgeted 30
+GAP_STATS_MM = 33  # stats strip + its 6mm margin: 31.9 measured, tall by 1.1
+# The hero box measures 47.9mm and has no margin of its own (`margin-top:
+# auto` pins it to the foot of the sheet); 0.13.2 budgeted 46 and so let a
+# brim-packed sheet claim room it did not have.
+GAP_CTA_MM = 49
+# A 10.5pt line at line-height 1.45: 5.37mm measured, budgeted 5.45 — 1.5%
+# tall, and the tallness is load-bearing at GAP_SHEET_MM 178. A question that
+# sits exactly on a line boundary costs the same millimetres estimated as
+# printed (24.6 against 24.5 at 5.4), so a report of uniformly brim-length
+# questions packed one item too many onto every sheet and Chromium cut four of
+# them in half. At 5.45 the six-item pack estimates 148.8 against a 148mm
+# budget and the sheet stops at five — while the three-line questions of both
+# beta cascades still pack seven to a sheet, unchanged.
+GAP_LINE_MM = 5.45
 GAP_ITEM_SPACING_MM = 3
-# the 220mm .gap-list column fits 121 characters of representative prose at
-# 10.5pt; budgeted at 95 so a line of wide glyphs still estimates tall
-GAP_CHARS_PER_LINE = 95
+# The 220mm .gap-list column at 10.5pt (2026-09-14): across the 25 measured
+# questions of both cascades the tightest wrap was 373 characters over four
+# lines — 124 characters per line — and the loosest 202 over two. Budgeted at
+# 115 weighted characters (`est_lines`), so a line of capitals or long
+# compounds spends the budget at the rate it really costs. At 95 a three-line
+# question charged four lines and a four-line one five; the report ran to ten
+# sheets with the CTA alone on the last.
+GAP_CHARS_PER_LINE = 115
 # The Proposed-content section sets one size smaller than the numbered list,
 # so it gets its own line budget instead of borrowing the 10.5pt one — with 29
 # entries on a real cascade, rounding every line up by 10% costs whole sheets.
-# The same 220mm column fits 132 characters at 9.5pt, 127 when the whole line
-# is the semibold element-label prefix; budgeted at 105 for the same ~20%
-# safety margin the numbered list carries.
-GAP_PROPOSED_LINE_MM = 4.9  # a 9.5pt line at line-height 1.45
+# Measured 2026-09-14 across 86 entries of both cascades, the same 220mm column
+# breaks between 143 characters (still one line) and 144 (two) at 9.5pt;
+# budgeted at 125 weighted characters for the same ~15% safety margin the
+# numbered list carries.
+GAP_PROPOSED_LINE_MM = 4.9  # a 9.5pt line at line-height 1.45, measured 4.85
 GAP_PROPOSED_SPACING_MM = 2
-GAP_PROPOSED_CHARS = 105
+GAP_PROPOSED_CHARS = 125
 # One per-one-pager subheading: its own 10pt line plus the margins that
 # separate it from the group above (3mm) and its own list below (1.5mm), and
 # the 2mm bottom margin of the preceding <ul>. Budgeted tall, like the rest.
@@ -1107,15 +1407,15 @@ SOURCES_MAX = 8
 
 
 def gap_item_mm(text):
-    return GAP_ITEM_SPACING_MM + GAP_LINE_MM * (1 + len(text) // GAP_CHARS_PER_LINE)
+    return GAP_ITEM_SPACING_MM + GAP_LINE_MM * est_lines(text, GAP_CHARS_PER_LINE)
 
 
 def gap_proposed_mm(text):
     """Height of one Proposed-content line. `text` must be the line the markup
     actually produces, separators included — its semibold prefix is why
     GAP_PROPOSED_CHARS is measured on a semibold sample."""
-    return GAP_PROPOSED_SPACING_MM + GAP_PROPOSED_LINE_MM * (
-        1 + len(text) // GAP_PROPOSED_CHARS
+    return GAP_PROPOSED_SPACING_MM + GAP_PROPOSED_LINE_MM * est_lines(
+        text, GAP_PROPOSED_CHARS
     )
 
 

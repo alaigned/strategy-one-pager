@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or show what you built
+    url: https://github.com/alaigned/strategy-one-pager/discussions
+    about: Discussions are the place for questions and results
+  - name: Email support
+    url: mailto:support@alaigned.com
+    about: For anything that should not be public

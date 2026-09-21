@@ -1,0 +1,48 @@
+name: Failed or wrong run
+description: The skill did not run, stopped early, or produced something wrong
+labels: [run-problem]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Skill version
+      description: The `version` line in `skills/strategy-one-pager/SKILL.md`
+      placeholder: 0.15.0
+    validations:
+      required: true
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Tool
+      options:
+        - Claude Code
+        - Claude app (claude.ai)
+        - Codex
+        - ChatGPT (Business / Enterprise / Edu)
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      placeholder: Opus
+  - type: textarea
+    id: inputs
+    attributes:
+      label: What you attached
+      description: Shape and size only (e.g. "one 30-slide deck and an OKR sheet"). Do not paste confidential content.
+    validations:
+      required: true
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened, and what you expected instead
+    validations:
+      required: true
+  - type: textarea
+    id: script-output
+    attributes:
+      label: Last lines from the validator and renderer
+      description: The scripts print one closing line each. Paste them if you have them.
+      render: text
