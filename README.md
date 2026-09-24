@@ -31,8 +31,9 @@ Learn more at [alaigned.com/strategy-one-pager-skill](https://alaigned.com/strat
 
 | Tool | How |
 |---|---|
-| **Claude Code** | `/plugin marketplace add alaigned/strategy-one-pager` then `/plugin install alaigned-strategy@alaigned` |
-| **Claude app** (claude.ai) | Download the [skill zip](https://try.alaigned.com/skill/download), add it once under Customize → Skills. [Step-by-step guide](https://try.alaigned.com/skill/guide) |
+| **Claude Code** | Paste `/plugin install alaigned-strategy --marketplace alaigned/strategy-one-pager` (Claude Code 2.1.275 or later; before that, `/plugin marketplace add alaigned/strategy-one-pager` then `/plugin install alaigned-strategy@alaigned`), then `/strategy-one-pager` |
+| **Claude app** — Cowork or chat (desktop or web) | Customize → Plugins → **Add marketplace → Add from a repository**, paste `alaigned/strategy-one-pager`, click **Sync**, then **Add** Alaigned Strategy. Attach your strategy documents and type `/strategy-one-pager`. [Step-by-step guide](https://try.alaigned.com/skill/guide) |
+| **Claude app, no Plugins page** | On Team and Enterprise an owner switches plugins and skills on. Until then, attach the [skill zip](https://try.alaigned.com/skill/download) to a chat and ask Claude to use the skill — or, with skills enabled, add it once under Customize → Skills |
 | **Codex** | Paste the install prompt from [try.alaigned.com/skill](https://try.alaigned.com/skill); the skill lives on your machine from then on |
 | **ChatGPT** (Business, Enterprise, Edu) | Download the [skill zip](https://try.alaigned.com/skill/download), drop it into the chat and ask it to unpack and run the skill |
 | **Any agent that reads SKILL.md** | `npx skills add alaigned/strategy-one-pager` |
