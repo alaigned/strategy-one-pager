@@ -7,7 +7,7 @@ body:
     attributes:
       label: Skill version
       description: The `version` line in `skills/strategy-one-pager/SKILL.md`
-      placeholder: 0.15.0
+      placeholder: 0.15.1
     validations:
       required: true
   - type: dropdown

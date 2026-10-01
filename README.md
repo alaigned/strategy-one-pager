@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/hero.png" alt="A company Strategy One-Pager next to its Strategy Gap Report, rendered by the skill" width="800">
+  <img src="docs/hero.webp" alt="A company Strategy One-Pager next to its Strategy Gap Report, rendered by the skill" width="800">
 </p>
 
 # Strategy One-Pager
@@ -11,7 +11,7 @@ plans, writes a company Strategy One-Pager plus a linked one for every team, and
 against the Alaigned methodology. Every team page provably derives from the company page. Free, no
 sign-up, runs inside your own AI tool.
 
-[![Version](https://img.shields.io/badge/version-0.15.0-118E64)](https://github.com/alaigned/strategy-one-pager/releases)
+[![Version](https://img.shields.io/badge/version-0.15.1-118E64)](https://github.com/alaigned/strategy-one-pager/releases)
 [![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/license-PolyForm%20Shield%201.0.0-7A76BE)](LICENSE)
 [![Works with](https://img.shields.io/badge/works%20with-Claude%20Code%20%7C%20Claude%20app%20%7C%20Codex%20%7C%20ChatGPT%20Business-333)](#install)
 
@@ -56,7 +56,9 @@ execution to validate and render its output.
 The skill runs entirely inside your AI tool's session. It reads what you attach, drafts the
 cascade, and runs its validator and renderer locally. Nothing you attach is uploaded to Alaigned
 and no Alaigned server is called. The only outward step it can take is a public-data search about
-your company, and it asks you before doing that.
+your company, and it asks you before doing that. The full
+[privacy policy](https://try.alaigned.com/skill/privacy) and
+[terms](https://try.alaigned.com/skill/terms) for the skill are on the Alaigned site.
 
 ## Requirements
 

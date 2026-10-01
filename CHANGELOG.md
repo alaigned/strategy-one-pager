@@ -7,6 +7,14 @@ The GitHub Release for each tag carries the same three lines.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow
 the `version` in `skills/strategy-one-pager/SKILL.md`; the tag is `v<version>`.
 
+## [0.15.1] - 2026-09-30
+
+- Fixed: on a Mac, running the skill in Codex no longer brings up "Google Chrome quit
+  unexpectedly" twice for every PDF. The sandbox there keeps Chrome from starting, so the renderer
+  checks first and goes straight to the next PDF engine.
+- Methodology: `sha256:794b7d8f`
+- Tested on: the renderer under the Codex sandbox on macOS (no model run)
+
 ## [0.15.0] - 2026-09-14
 
 - Changed: the skill is now called Strategy One-Pager. Its name in the skill list, the slash

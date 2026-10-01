@@ -8,10 +8,11 @@ Stdlib only at its core, mirroring validate_cascade.py — the skill runs
 anywhere Python does, no packages, no network, no external assets. `--pdf`
 produces a real PDF with the best engine this environment actually offers,
 probed at run time: headless Chromium (faithful to the print CSS — always
-wins when present), then WeasyPrint, then a built-in stdlib PDF writer
-(simplified layout, zero dependencies) so no environment ships without a
-PDF. The HTML additionally prints to PDF from any browser (Cmd/Ctrl+P) —
-the full-design companion whenever the built-in tier rendered the PDF.
+wins when present and able to start), then WeasyPrint, then a built-in
+stdlib PDF writer (simplified layout, zero dependencies) so no environment
+ships without a PDF. The HTML additionally prints to PDF from any browser
+(Cmd/Ctrl+P) — the full-design companion whenever the built-in tier
+rendered the PDF.
 `--docx` writes the editable twin: the same design as a hand-authored OOXML
 package (stdlib `zipfile`, one engine, no converters), which Google Drive
 turns into a native Google Doc on convert-on-upload.
@@ -4215,6 +4216,46 @@ def _probe_chromium():
     return None
 
 
+# sandbox_check() filter flags: match the service by its global name, and do
+# not log the question as a violation.
+_SANDBOX_FILTER_GLOBAL_NAME = 2
+_SANDBOX_CHECK_NO_REPORT = 0x40000000
+
+
+def window_server_denied():
+    """True when a macOS sandbox keeps this process — and any browser it
+    launches — away from WindowServer.
+
+    Chrome registers with WindowServer at startup even under --headless and
+    aborts when the lookup is denied: no PDF, and macOS puts a "Google Chrome
+    quit unexpectedly" dialog on the user's screen for every attempt. The
+    sandboxes desktop coding agents run commands in deny exactly that lookup,
+    so the ladder asks the sandbox first and never launches a browser that
+    cannot start. Outside a sandbox, and on every other platform, the answer
+    is False."""
+    if sys.platform != "darwin":
+        return False
+    try:
+        import ctypes
+
+        check = ctypes.CDLL("/usr/lib/libSystem.dylib").sandbox_check
+    except (ImportError, OSError, AttributeError):
+        # no way to ask — the browser gets its attempt, as it always did
+        return False
+    check.restype = ctypes.c_int
+    # sandbox_check is variadic: only the fixed parameters are declared, so
+    # the service name travels as a variadic argument (arm64 passes those
+    # differently from fixed ones)
+    check.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
+    denied = check(
+        os.getpid(),
+        b"mach-lookup",
+        _SANDBOX_FILTER_GLOBAL_NAME | _SANDBOX_CHECK_NO_REPORT,
+        ctypes.c_char_p(b"com.apple.windowserver.active"),
+    )
+    return denied == 1
+
+
 def _has_pdf_magic(path):
     """Proof the file is a PDF this run produced — an external engine that
     writes an error page (or nothing) under the PDF name must not count as
@@ -4259,7 +4300,9 @@ def convert_to_pdf(html_path, pdf_path, bundle, only_op=None, engine="auto"):
     actual capabilities at run time (never a hardcoded platform assumption):
 
       1. headless Chromium — renders the print CSS faithfully; always wins
-         when any Chromium/Chrome/Edge binary exists here.
+         when any Chromium/Chrome/Edge binary exists here and can start
+         (a macOS sandbox without WindowServer access skips this tier
+         instead of crashing the browser — see window_server_denied()).
       2. WeasyPrint — near-faithful; used when importable. It gets
          WEASYPRINT_CSS layered on top so its flex-fragmentation limits do
          not corrupt the pages; check the output against the HTML.
@@ -4273,6 +4316,9 @@ def convert_to_pdf(html_path, pdf_path, bundle, only_op=None, engine="auto"):
     if engine in ("auto", "chromium"):
         chromium = find_chromium()
         failure = "no chromium/chrome/edge binary in this environment"
+        if chromium and window_server_denied():
+            failure = "this macOS sandbox denies WindowServer access, so the browser cannot start"
+            chromium = None
         if chromium:
             # Chrome's sandbox stays on wherever it works — desktop users are
             # the ones rendering alongside untrusted content. Root or

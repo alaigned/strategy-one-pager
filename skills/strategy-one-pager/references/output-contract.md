@@ -12,7 +12,7 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
   "bundleVersion": "0.1",
   "generator": {
     "skill": "strategy-one-pager",
-    "skillVersion": "0.15.0",
+    "skillVersion": "0.15.1",
     "generatedAt": "2026-07-06"
   },
   "methodology": {

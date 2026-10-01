@@ -1,7 +1,7 @@
 ---
 name: strategy-one-pager
 description: Convert a company's existing strategy documents (decks, memos, plans, OKR docs) into an aligned one-pager cascade following the Alaigned methodology — a company-level (L0) one-pager plus team-level (L1) one-pagers with explicit alignment links, validated against the Alaigned methodology schema. Documents are the preferred input; a company website URL works as a starting source when documents are scarce. Use when someone wants to structure, pressure-test, condense, or operationalize their strategy into one page per team.
-version: 0.15.0
+version: 0.15.1
 license: LicenseRef-PolyForm-Shield-1.0.0
 argument-hint: "[strategy docs — decks, memos, annual plans, OKR sheets: @-mention or drag files in — or a company website URL]"
 ---
