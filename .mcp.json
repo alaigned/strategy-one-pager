@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "alaigned": {
+      "type": "http",
+      "url": "https://mcp.alaigned.com/mcp"
+    }
+  }
+}

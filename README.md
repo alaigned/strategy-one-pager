@@ -9,7 +9,9 @@
 An Agent Skill for Claude Code, the Claude app, Codex and ChatGPT. It reads your decks, memos and
 plans, writes a company Strategy One-Pager plus a linked one for every team, and checks the result
 against the Alaigned methodology. Every team page provably derives from the company page. Free, no
-sign-up, runs inside your own AI tool.
+sign-up, runs inside your own AI tool. For teams that already run their strategy in Alaigned, the
+plugin also connects the assistant to the live strategy — see
+[Connect it to Alaigned](#connect-it-to-alaigned).
 
 [![Version](https://img.shields.io/badge/version-0.15.1-118E64)](https://github.com/alaigned/strategy-one-pager/releases)
 [![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/license-PolyForm%20Shield%201.0.0-7A76BE)](LICENSE)
@@ -42,6 +44,23 @@ Pick **Opus** when you can choose the model. Smaller models produce noticeably w
 Strategy One-Pagers. Free plans of ChatGPT and Claude do not run this skill: it needs code
 execution to validate and render its output.
 
+## Connect it to Alaigned
+
+The plugin also carries the **Alaigned connector**, for teams that keep their strategy in
+[Alaigned](https://alaigned.com). Connected, your assistant can read the one-pagers you have access
+to in the active strategy version, with the links between them, and answer questions, summarise or
+draft with that in hand. It reads only; it cannot change anything in Alaigned. Without an Alaigned
+workspace there is nothing to connect, and the skill works exactly the same.
+
+| Tool | How |
+|---|---|
+| **Claude Code** | Type `/mcp`, pick **alaigned** and sign in to your Alaigned workspace in the browser that opens |
+| **Claude app** | Open the plugin's **Connectors** tab, connect **alaigned** and sign in |
+
+Connections are off until an administrator turns them on for your workspace (Company Profile →
+Feature Flags → **AI assistant connections**). Disconnect any time under Account Settings →
+**Connected assistants**, or by removing the connector in your assistant.
+
 ## What it does not do
 
 - It does not write a strategy you do not have. Thin sources produce a short page and a long Gap
@@ -59,6 +78,12 @@ and no Alaigned server is called. The only outward step it can take is a public-
 your company, and it asks you before doing that. The full
 [privacy policy](https://try.alaigned.com/skill/privacy) and
 [terms](https://try.alaigned.com/skill/terms) for the skill are on the Alaigned site.
+
+The connector is the one part of this plugin that talks to Alaigned, and only after you connect it:
+it then reads your strategy from your own Alaigned workspace at `https://mcp.alaigned.com/mcp`, as
+you, and sends nothing else. Every read is recorded in your workspace's audit log. The connector's
+own [privacy policy](https://try.alaigned.com/connector/privacy) covers what the connection sees
+and keeps.
 
 ## Requirements
 
@@ -112,6 +137,7 @@ report from a real run is the most useful thing you can send. See [CONTRIBUTING.
 | Path | What it is |
 |---|---|
 | `.claude-plugin/` | Plugin and marketplace manifests |
+| `.mcp.json` | The Alaigned connector the plugin points at: the address your assistant connects to, nothing more |
 | `skills/strategy-one-pager/` | The skill: `SKILL.md`, references, templates, the validator and renderer, the inlined methodology schema |
 | `docs/` | Images used by this README |
 | `examples/` | Three synthetic strategy documents to try the skill on, and a note on what each one exercises |
