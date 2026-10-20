@@ -7,6 +7,14 @@ The GitHub Release for each tag carries the same three lines.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow
 the `version` in `skills/strategy-one-pager/SKILL.md`; the tag is `v<version>`.
 
+## [0.15.2] - 2026-10-14
+
+- Changed: the bundle envelope schema (`cascade-bundle.schema.json` in the skill) now describes
+  every property — what each field holds, in the same words the Alaigned connector uses when it
+  returns a cascade — so a tool reading the schema needs no prose beside it.
+- Methodology: `sha256:794b7d8f`
+- Tested on: the skill's own validator against the golden bundles (no model run)
+
 ## [0.15.1] - 2026-09-30
 
 - Fixed: on a Mac, running the skill in Codex no longer brings up "Google Chrome quit

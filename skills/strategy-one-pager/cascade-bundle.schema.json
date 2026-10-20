@@ -1,30 +1,32 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Alaigned strategy cascade bundle",
-  "description": "Envelope for the strategy-one-pager skill output. Each onePagers[].content is additionally validated against schemas/methodology.inlined.json hierarchy[level].onePagerSchema.",
+  "description": "Envelope of a strategy cascade bundle: the strategy-one-pager skill produces one, and the get_cascade connector tool returns one. Each onePagers[].content is additionally validated against the methodology's hierarchy[level].onePagerSchema.",
   "type": "object",
   "required": ["bundleVersion", "generator", "methodology", "company", "onePagers", "links"],
   "additionalProperties": false,
   "properties": {
-    "bundleVersion": { "const": "0.1" },
+    "bundleVersion": { "const": "0.1", "description": "Version of the bundle format" },
     "generator": {
       "type": "object",
+      "description": "What produced the bundle",
       "required": ["skill", "skillVersion", "generatedAt"],
       "additionalProperties": false,
       "properties": {
-        "skill": { "type": "string", "minLength": 1 },
-        "skillVersion": { "type": "string", "minLength": 1 },
-        "generatedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+        "skill": { "type": "string", "minLength": 1, "description": "Name of the producer: the skill, or alaigned-app for a bundle exported from Alaigned" },
+        "skillVersion": { "type": "string", "minLength": 1, "description": "Version of the producer" },
+        "generatedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Date the bundle was produced, YYYY-MM-DD" }
       }
     },
     "methodology": {
       "type": "object",
+      "description": "The methodology the one-pager content follows",
       "required": ["methodologyID", "fingerprint"],
       "additionalProperties": false,
       "properties": {
-        "methodologyID": { "type": "string", "minLength": 1 },
-        "fingerprint": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
-        "fingerprintGeneratedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+        "methodologyID": { "type": "string", "minLength": 1, "description": "Identifier of the methodology" },
+        "fingerprint": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "description": "sha256 fingerprint of the methodology schema, what the validate-script compares a bundle to" },
+        "fingerprintGeneratedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Date the fingerprint was taken, YYYY-MM-DD" }
       }
     },
     "attribution": {
@@ -33,53 +35,57 @@
       "required": ["ref"],
       "additionalProperties": false,
       "properties": {
-        "ref": { "type": "string", "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }
+        "ref": { "type": "string", "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", "description": "UUIDv4 of the strategy run that produced the bundle" }
       }
     },
     "company": {
       "type": "object",
+      "description": "The organization the strategy belongs to",
       "required": ["name"],
       "additionalProperties": false,
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "sourceDocuments": { "type": "array", "items": { "type": "string" } }
+        "name": { "type": "string", "minLength": 1, "description": "Name of the organization" },
+        "sourceDocuments": { "type": "array", "items": { "type": "string" }, "description": "Documents the bundle was derived from" }
       }
     },
     "onePagers": {
       "type": "array",
+      "description": "The one-pagers of the cascade",
       "minItems": 2,
       "items": {
         "type": "object",
         "required": ["ref", "level", "title", "parentRef", "content"],
         "additionalProperties": false,
         "properties": {
-          "ref": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
-          "level": { "type": "integer", "minimum": 0, "maximum": 3 },
-          "title": { "type": "string", "minLength": 1 },
-          "parentRef": { "type": ["string", "null"] },
-          "content": { "type": "object" }
+          "ref": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "Identifier of the one-pager, unique within the bundle; the one-pager id in a bundle exported from Alaigned" },
+          "level": { "type": "integer", "minimum": 0, "maximum": 3, "description": "Level in the cascade: 0 for the company one-pager, 1 for the one-pagers linked to it, and so on" },
+          "title": { "type": "string", "minLength": 1, "description": "Title of the one-pager" },
+          "parentRef": { "type": ["string", "null"], "description": "ref of the superior one-pager; null at the top of the cascade, or when the superior one-pager is outside the bundle" },
+          "content": { "type": "object", "description": "The one-pager content — pillars, definitions of success, initiatives with goals, narratives and evaluation status — shaped by the methodology's one-pager schema for the level" }
         }
       }
     },
     "links": {
       "type": "array",
+      "description": "The cascade links between the one-pagers in the bundle",
       "items": {
         "type": "object",
         "required": ["parentRef", "childRef", "parentRule", "childRule", "parentPath", "childPath"],
         "additionalProperties": false,
         "properties": {
-          "parentRef": { "type": "string", "minLength": 1 },
-          "childRef": { "type": "string", "minLength": 1 },
-          "parentRule": { "type": "string", "minLength": 1 },
-          "childRule": { "type": "string", "minLength": 1 },
-          "parentPath": { "type": "string", "minLength": 1 },
-          "childPath": { "type": "string", "minLength": 1 }
+          "parentRef": { "type": "string", "minLength": 1, "description": "ref of the superior one-pager the link cascades from" },
+          "childRef": { "type": "string", "minLength": 1, "description": "ref of the linked one-pager the link cascades to" },
+          "parentRule": { "type": "string", "minLength": 1, "description": "Cascade rule on the superior side" },
+          "childRule": { "type": "string", "minLength": 1, "description": "Cascade rule on the linked side" },
+          "parentPath": { "type": "string", "minLength": 1, "description": "Path of the cascaded element inside the superior one-pager's content" },
+          "childPath": { "type": "string", "minLength": 1, "description": "Path of the cascaded element inside the linked one-pager's content" }
         }
       }
     },
     "openQuestions": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string" },
+      "description": "Questions the producer left open"
     }
   }
 }
