@@ -1092,7 +1092,7 @@
                   "type": "object"
                 },
                 "maxItems": 100,
-                "maxItemsRecommended": 8,
+                "maxItemsRecommended": 5,
                 "minItems": 0,
                 "type": "array"
               },
@@ -2288,7 +2288,7 @@
                   "type": "object"
                 },
                 "maxItems": 100,
-                "maxItemsRecommended": 8,
+                "maxItemsRecommended": 5,
                 "minItems": 0,
                 "type": "array"
               },
@@ -3480,7 +3480,7 @@
                   "type": "object"
                 },
                 "maxItems": 100,
-                "maxItemsRecommended": 8,
+                "maxItemsRecommended": 5,
                 "minItems": 0,
                 "type": "array"
               },
@@ -4672,7 +4672,7 @@
                   "type": "object"
                 },
                 "maxItems": 100,
-                "maxItemsRecommended": 8,
+                "maxItemsRecommended": 5,
                 "minItems": 0,
                 "type": "array"
               },

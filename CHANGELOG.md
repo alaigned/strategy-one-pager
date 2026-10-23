@@ -7,6 +7,29 @@ The GitHub Release for each tag carries the same three lines.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow
 the `version` in `skills/strategy-one-pager/SKILL.md`; the tag is `v<version>`.
 
+## [0.17.0] - 2026-10-22
+
+- Changed: the recommended ceiling for values is five, down from eight, and it is never an error.
+  The skill keeps every value your sources state; above five, the Gap Report asks which five you
+  run by. A pillar with four or five initiatives still validates, but gets a Gap Report note
+  naming the count, and the skill moves an extra initiative to a better pillar or reports it as a
+  gap instead of merging two into one sentence.
+- Methodology: `sha256:7e291576`
+- Tested on: the skill's own validator against the golden bundles (no model run)
+
+## [0.16.0] - 2026-10-22
+
+- Changed: the guidance follows the latest Alaigned methodology. Purpose, Vision and Mission
+  are all optional — the skill fills the ones your sources support. The Strategic Ambition may
+  combine a few linked figures, say revenue and profitability. Each pillar aims for at most three
+  initiatives, and the target sits in the initiative's goal — a number or a clearly checkable
+  state. A team is named critical only when a distinct part of the initiative lands on its page,
+  not because it is needed. Enablers are named for the change they bring ("Upgraded CRM
+  platform"), and routine operations stay off the page. The either/or "DNA" note on the company
+  page is gone.
+- Methodology: `sha256:794b7d8f`
+- Tested on: the skill's own validator against the golden bundles (no model run)
+
 ## [0.15.2] - 2026-10-14
 
 - Changed: the bundle envelope schema (`cascade-bundle.schema.json` in the skill) now describes

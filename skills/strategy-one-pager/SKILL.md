@@ -1,7 +1,7 @@
 ---
 name: strategy-one-pager
 description: Convert a company's existing strategy documents (decks, memos, plans, OKR docs) into an aligned one-pager cascade following the Alaigned methodology — a company-level (L0) one-pager plus team-level (L1) one-pagers with explicit alignment links, validated against the Alaigned methodology schema. Documents are the preferred input; a company website URL works as a starting source when documents are scarce. Use when someone wants to structure, pressure-test, condense, or operationalize their strategy into one page per team.
-version: 0.15.2
+version: 0.17.0
 license: LicenseRef-PolyForm-Shield-1.0.0
 argument-hint: "[strategy docs — decks, memos, annual plans, OKR sheets: @-mention or drag files in — or a company website URL]"
 ---
@@ -93,14 +93,14 @@ never ask and draft in the same turn:
   question, outside the cap.
 - **Company name** and (if ambiguous from the docs) a one-line description of what it does —
   the sources usually name it; ask only when they don't.
-- **Which teams get an L1 one-pager**: the units that own execution (departments, tribes,
-  business lines). When the sources name the execution units, select 2–5 yourself and record
-  the choice in the open questions — don't ask upfront. (`[PROPOSED]` stays a marker on
-  composed text content: the page title and the company name render straight into the page
-  heading, so a marker there escapes the draft banner and the Gap Report — the validators
-  reject it.)
-  Spend a question only when the sources offer no defensible split; in a website-only run,
-  decide after the public-data pass.
+- **Which teams get an L1 one-pager**: the units whose heads report directly to the CEO — board
+  members' areas, departments, business lines. A critical team can only be a direct report of the
+  one-pager's owner, so the L1 split follows the reporting line. When the sources name the execution
+  units, select 2–5 yourself and record the choice in the open questions — don't ask upfront.
+  (`[PROPOSED]` stays a marker on composed text content: the page title and the company name render
+  straight into the page heading, so a marker there escapes the draft banner and the Gap Report —
+  the validators reject it.) Spend a question only when the sources offer no defensible split; in a
+  website-only run, decide after the public-data pass.
 - **Time horizon** of the strategy (e.g. "2026–2028"), if stated anywhere. When the sources
   label years fiscally ("FY26"), establish the company's fiscal calendar too — calendar year,
   or fiscal year ending in month X. Fiscal labels or not, make sure you know **today's date**:
@@ -146,22 +146,35 @@ spent → work with what's in hand, which may mean the confidence stop fires; ne
 for one more source. The pass supplements the documents; it never delays or replaces reading
 them.
 
-- **Purpose / Vision / Mission** — the "why". At least one must be filled at L0; using one, two,
-  or all three is a legitimate choice, so unfilled ones stay `null` without an open question.
+- **Purpose / Vision / Mission** — the "why". None of the three is mandatory: fill the ones the
+  sources support; unfilled ones stay `null` (the element objects still exist) without an open
+  question.
 - **Strategic Ambition** (`companyAmbition`) — one fundamental goal in concrete business
-  parameters; the strongest form is a single sharp line carrying a number or a position.
+  parameters. One parameter is the strongest form; a small set of interlinked parameters
+  (typically revenue and profitability together, up to three or four) is workable. Either way it
+  is a single sharp line carrying a number or a position.
 - **Strategic Pillars** (optimum 3–4, ceiling 5) — short noun phrases (2–4 words), designed
-  around content, not the org chart — each with 1–2 Definitions of Success.
-- **Key Initiatives** under each pillar (optimum 2–3 per L0 pillar, ceiling 5; ~10–12 per page;
-  cascaded pillars run leaner — see Step 4) — each written as a **sentence with a verb**, with a
-  measurable **Goal** (`goal`) and timing if stated.
+  around content, not the org chart — each with 1–2 Definitions of Success. The limit of two is
+  a limit on fields: a small set of related measures goes inside the text of one Definition of
+  Success, not into further fields.
+- **Key Initiatives** under each pillar (optimum 2–3, recommended max 3 per pillar, ceiling 5;
+  ~10–12 per page; cascaded pillars run leaner — see Step 4) — each written as a **sentence with
+  a verb**, with a measurable **Goal** (`goal`, one or two measures, no dates of its own) and
+  the initiative's start and end date (`timing`) if stated. When a pillar has more than three
+  candidate initiatives, move one to the pillar it serves better or report it as a gap — never
+  merge two initiatives into one sentence. Four or five in one pillar still validate, but add an
+  open question naming the count ("this pillar carries five initiatives; the methodology
+  recommends three — which can move or wait?"), so the Gap Report shows it.
 - **Enablers** (L0 only, ceiling 5) — organisational conditions ("how we organise ourselves"),
   strictly distinct from initiatives. A budget or a platform cost line is not an enabler. Name
-  an enabler as a **short noun phrase for the condition** ("Modern ERP backbone"), never a verb
-  exhortation — its name cascades verbatim into pillar names on team pages.
-- **Values** — only if the sources state them; first person, ceiling 8. Never invent values.
-- **DNA-style either/or choices** — the v1 schema has no field for them; put genuine ones into
-  the L0 `narrative` and add an open question.
+  an enabler as a **short noun phrase that names the change** ("Upgraded CRM platform", "Modern
+  ERP backbone"), never a verb exhortation and never a bare tool noun ("CRM technology") — its
+  name cascades verbatim into pillar names on team pages.
+- **Values** — only if the sources state them; first person, ceiling 5. Never invent values.
+  Copy them from the sources and never treat the count as an error: above five, keep every
+  value on the page and add an open question naming the actual count, e.g. "you list seven
+  values; the methodology recommends five — which five do you run by?". The validator's ceiling
+  warning on values is answered by that open question, never by cutting a value.
 
 Rules of extraction:
 
@@ -201,8 +214,12 @@ Rules of extraction:
   current fiscal year, or raise it as an open question. When the sources don't settle the
   convention, ask; never guess. A re-anchored or otherwise composed FY label carries
   `[PROPOSED]` like any composed date.
-- **Only "changing the business" goes on the page.** Run-the-business commitments (service
-  levels, routine quality targets) are not strategy — leave them off.
+- **Only "changing the business" goes among the pillars and initiatives.** Ask of every
+  candidate initiative: *if this succeeds, what about the business will be different?* If the
+  honest answer is "nothing, it keeps the operation running", it is not an initiative. A
+  foundation the strategy needs *built or improved* goes into Enablers, named for that change;
+  the routine of running the operation (service levels, routine quality targets, steady-state
+  obligations) stays off the page.
 - Rewrite noun-phrase initiatives as verb sentences and vague goals as measurable ones (the
   green/yellow/red test); keep the author's language where it is already good.
 - Track the source of each extracted statement — document + section, or URL + access date —
@@ -212,11 +229,11 @@ Rules of extraction:
 
 ### Step 3 — Draft the L0 (company) one-pager
 
-Follow the structure rules in `references/methodology-guide.md`. At L0: at least one of
-Purpose/Vision/Mission filled, the Strategic Ambition always; 3–5 pillars, each with 1–2
-Definitions of Success and its initiatives; enablers present; values listed only if the sources
-state them. (Schema note: the `purpose`/`vision`/`mission` element objects must exist even when
-their `textValue` stays `null`.)
+Follow the structure rules in `references/methodology-guide.md`. At L0: whichever of
+Purpose/Vision/Mission the sources support (none is mandatory), the Strategic Ambition always; 3–5
+pillars, each with 1–2 Definitions of Success and its initiatives; enablers present; values listed
+only if the sources state them. (Schema note: the `purpose`/`vision`/`mission` element objects must
+exist even when their `textValue` stays `null`.)
 
 ### Step 4 — Design the cascade
 
@@ -224,14 +241,26 @@ their `textValue` stays `null`.)
   deliver it (one accountable team is the default; more only when the sources show a real shared
   delivery). The initiative becomes a pillar on each critical team's page. When ownership is
   unclear, propose an assignment and add an open question.
+- **What makes a team critical:** it will carry its own distinct part of the initiative — a
+  sub-task it owns, with its own goal, that reappears as a pillar on its page. Being needed is
+  not the test: a function that only provides service or capacity (IT, Finance) is not a critical
+  team for it — that support belongs in Enablers or horizontal alignment.
 - **The dead-end rule:** an initiative delivered by the L0 owner's own team does not cascade —
   it stays on L0 with no child pillar. That is correct, not a gap.
-- **Enablers cascade to the teams that must build or adopt them** — often all of them, but that
-  is a content decision. When in doubt, cascade to all L1 teams and note the assumption.
+- **Enablers cascade like initiatives** — to the teams that will carry a distinct part of
+  building them, not to every team that will use the result. When the sources don't say,
+  cascade to the teams they name and raise the rest as an open question.
+- **Shared initiatives:** where several teams share an initiative, each team's pillar keeps the
+  parent goal verbatim in `successDefinition1` and states the team's own part in
+  `successDefinition2`. When the sources do not say how the work divides, leave
+  `successDefinition2` null and raise the split as an open question.
+- Keep any one team to about five cascades from the same one-pager — more means its page
+  carries too many pillars; flag it as an open question.
 - **The filled core statements (Purpose/Vision/Mission — whichever are non-null — and the
   Strategic Ambition) cascade verbatim** to every L1, per the schema's cascade rules.
 - Each L1 team writes its **own Team Strategic Ambition** (mandatory at L1, never cascaded):
-  the team's role within the company ambition, narrowed to its domain — not a restatement.
+  the team's role within the company ambition, narrowed to its domain — not a restatement. (The
+  methodology lets a company run without it; the schema requires it at L1, so always write one.)
 - **Under a cascaded pillar the receiving team writes real content:** 1–3 initiatives in its own
   domain language, verb sentences with measurable goals. Teams sharing an L0 initiative share
   the pillar, never the initiatives under it.
@@ -404,16 +433,19 @@ becomes live and maintained instead of a snapshot.
 - Output JSON **must** validate against the bundled methodology (`schemas/methodology.inlined.json`)
   — that is this skill's differentiator and the precondition for product import.
 - Cascaded values are **verbatim copies** — never paraphrase across a link.
-- Initiatives are **sentences with a verb**; goals are **measurable outputs carrying a number**
-  (green/yellow/red testable). Attitudes belong in Values, never in Initiatives.
+- Initiatives are **sentences with a verb**; goals are **measurable outputs carrying a number
+  or a clearly assessable state** (green/yellow/red testable). Attitudes belong in Values, never
+  in Initiatives.
 - **L1 pages carry team-specific content** — no initiative or goal text shared across teams
   beyond the verbatim cascade, and a facilitation instruction in a content field is a placeholder.
 - Fiscal-year references follow the **company's own fiscal calendar**, verified against the
   current date — environment-provided or user-confirmed, never remembered from training; when
   the sources don't settle the convention, ask.
-- Respect the ceilings: ≤5 pillars, ≤5 initiatives per pillar, ≤5 enablers, ≤8 values — caps,
-  not targets (the working optimum stays 2–3 initiatives per L0 pillar, 1–3 under a cascaded
-  one). When the sources overflow them, prioritise and move the rest to open questions.
+- Respect the ceilings: ≤5 pillars, ≤5 initiatives per pillar, ≤5 enablers, ≤5 values — caps,
+  not targets (the working optimum stays 2–3 initiatives, recommended max 3 per pillar, 1–3 under
+  a cascaded one). When the sources overflow them, prioritise and move the rest to open questions.
+  Values are the exception: sourced values all stay on the page, and above five an open question
+  asks which five the company runs by.
 - Every one-pager content element carries its `label` (from the schema defaults) and every entity
   carries a unique UUID `metadata.id`.
 - The methodology fingerprint block is present in every bundle.

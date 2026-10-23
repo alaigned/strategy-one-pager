@@ -13,7 +13,7 @@ sign-up, runs inside your own AI tool. For teams that already run their strategy
 plugin also connects the assistant to the live strategy — see
 [Connect it to Alaigned](#connect-it-to-alaigned).
 
-[![Version](https://img.shields.io/badge/version-0.15.2-118E64)](https://github.com/alaigned/strategy-one-pager/releases)
+[![Version](https://img.shields.io/badge/version-0.17.0-118E64)](https://github.com/alaigned/strategy-one-pager/releases)
 [![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/license-PolyForm%20Shield%201.0.0-7A76BE)](LICENSE)
 [![Works with](https://img.shields.io/badge/works%20with-Claude%20Code%20%7C%20Claude%20app%20%7C%20Codex%20%7C%20ChatGPT%20Business-333)](#install)
 
