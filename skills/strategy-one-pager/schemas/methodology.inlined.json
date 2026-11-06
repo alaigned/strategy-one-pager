@@ -423,7 +423,7 @@
                                     "type": "boolean"
                                   },
                                   "label": {
-                                    "default": "Goal (picture of success)",
+                                    "default": "Goal (definition of success)",
                                     "type": "string"
                                   },
                                   "mandatory": {
@@ -636,7 +636,7 @@
                           "type": "array"
                         },
                         "label": {
-                          "default": "Initiatives",
+                          "default": "Key Areas of Initiatives",
                           "type": "string"
                         },
                         "semaphore": {
@@ -1619,7 +1619,7 @@
                                     "type": "boolean"
                                   },
                                   "label": {
-                                    "default": "Goal (picture of success)",
+                                    "default": "Goal (definition of success)",
                                     "type": "string"
                                   },
                                   "mandatory": {
@@ -2811,7 +2811,7 @@
                                     "type": "boolean"
                                   },
                                   "label": {
-                                    "default": "Goal (picture of success)",
+                                    "default": "Goal (definition of success)",
                                     "type": "string"
                                   },
                                   "mandatory": {
@@ -4003,7 +4003,7 @@
                                     "type": "boolean"
                                   },
                                   "label": {
-                                    "default": "Goal (picture of success)",
+                                    "default": "Goal (definition of success)",
                                     "type": "string"
                                   },
                                   "mandatory": {

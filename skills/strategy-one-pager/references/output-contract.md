@@ -12,7 +12,7 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
   "bundleVersion": "0.1",
   "generator": {
     "skill": "strategy-one-pager",
-    "skillVersion": "0.17.0",
+    "skillVersion": "0.18.0",
     "generatedAt": "2026-07-06"
   },
   "methodology": {
@@ -84,8 +84,10 @@ per-level schema inside `../schemas/methodology.inlined.json` (`hierarchy[level]
 
   `label` and `textValue` are **required** on every text element (labels come from the schema's
   defaults: "Purpose", "Vision", "Mission", "Company Strategic Ambition", "Team Strategic
-  Ambition", "Name", "Goal (picture of success)", "Success 1", "Success 2", "Narrative", "Text",
-  "Pillar", "Initiative", "Enabler", "Value", "Pillars", "Initiatives", "Enablers", "Values").
+  Ambition", "Name", "Goal (definition of success)", "Success 1", "Success 2", "Narrative", "Text",
+  "Pillar", "Initiative", "Enabler", "Value", "Pillars", "Initiatives", "Enablers", "Values"). The
+  initiatives of a pillar on the level-0 one-pager are labelled "Key Areas of Initiatives"; every
+  other level keeps "Initiatives".
   `textValue` may be `null` for honest gaps — pair that with an open question.
 
 - **Collections wrap their items in `content` arrays** (max 100 items):

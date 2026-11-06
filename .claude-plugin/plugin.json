@@ -1,7 +1,7 @@
 {
   "name": "alaigned-strategy",
   "displayName": "Alaigned Strategy",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "description": "Reads the decks, memos and plans you already have and writes a company one-pager plus a linked one-pager for every team, each tracing its goals to the company's and checked against the Alaigned methodology.",
   "author": {
     "name": "Alaigned",

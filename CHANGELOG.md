@@ -7,6 +7,15 @@ The GitHub Release for each tag carries the same three lines.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow
 the `version` in `skills/strategy-one-pager/SKILL.md`; the tag is `v<version>`.
 
+## [0.18.0] - 2026-11-01
+
+- Changed: the one-pager labels follow the latest Alaigned methodology. An initiative's goal is
+  labelled "Goal (definition of success)" instead of "Goal (picture of success)", and on the
+  company one-pager the initiatives inside each pillar are headed "Key Areas of Initiatives"
+  (Czech and Slovak artifacts print the glossary's terms). Bundles keep their shape.
+- Methodology: `sha256:207d7c4c`
+- Tested on: the skill's own validator against the golden bundles (no model run)
+
 ## [0.17.0] - 2026-10-22
 
 - Changed: the recommended ceiling for values is five, down from eight, and it is never an error.

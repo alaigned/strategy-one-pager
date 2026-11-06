@@ -226,6 +226,7 @@ STRINGS = {
             "Enablers": "Podmínky",
             "Values": "Hodnoty",
             "Initiatives": "Klíčové iniciativy",
+            "Key Areas of Initiatives": "Klíčové oblasti iniciativ",
             "Timing": "Termín",
             "Narrative": "Narativ",
             "Pillar": "Pilíř",
@@ -314,6 +315,7 @@ STRINGS = {
             "Enablers": "Podmienky",
             "Values": "Hodnoty",
             "Initiatives": "Kľúčové iniciatívy",
+            "Key Areas of Initiatives": "Kľúčové oblasti iniciatív",
             "Timing": "Termín",
             "Narrative": "Naratív",
             "Pillar": "Pilier",
@@ -413,7 +415,7 @@ def esc(text):
 
 
 def trim_label(label):
-    """Schema labels can carry a parenthetical ("Goal (picture of success)")
+    """Schema labels can carry a parenthetical ("Goal (definition of success)")
     — too long for narrow label columns; keep the term."""
     return re.sub(r"\s*\(.*\)$", "", label)
 
