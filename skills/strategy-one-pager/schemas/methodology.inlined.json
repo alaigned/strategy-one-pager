@@ -7,6 +7,7 @@
       "limits": {
         "criticalTeamsPerInitiative": 3
       },
+      "name": "Company",
       "onePagerSchema": {
         "description": "Root level template for top-level company strategy",
         "properties": {
@@ -1203,8 +1204,9 @@
       "limits": {
         "criticalTeamsPerInitiative": 3
       },
+      "name": "Function",
       "onePagerSchema": {
-        "description": "Company-level strategic template with high-level objectives and ambitions",
+        "description": "Turns the company's initiatives into its pillars — a function such as finance, HR or IT",
         "properties": {
           "companyAmbition": {
             "properties": {
@@ -2395,6 +2397,7 @@
       "limits": {
         "criticalTeamsPerInitiative": 3
       },
+      "name": "Department",
       "onePagerSchema": {
         "description": "Department or division-level template with tactical objectives",
         "properties": {
@@ -3587,6 +3590,7 @@
       "limits": {
         "criticalTeamsPerInitiative": 3
       },
+      "name": "Team",
       "onePagerSchema": {
         "description": "Team or project-level template with operational details",
         "properties": {

@@ -7,6 +7,15 @@ The GitHub Release for each tag carries the same three lines.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow
 the `version` in `skills/strategy-one-pager/SKILL.md`; the tag is `v<version>`.
 
+## [0.19.0] - 2026-11-17
+
+- Changed: every template of the methodology now carries a name — Company, Function, Department
+  and Team from the top level down, and the Function template describes itself by what cascades
+  into it. The skill's output is unchanged: it still writes the company page and its function
+  pages.
+- Methodology: `sha256:02af2c8e`
+- Tested on: the skill's own validator against the golden bundles (no model run)
+
 ## [0.18.0] - 2026-11-01
 
 - Changed: the one-pager labels follow the latest Alaigned methodology. An initiative's goal is
